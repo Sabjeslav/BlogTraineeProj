@@ -1,10 +1,22 @@
+import React from 'react';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import './App.sass';
 import AuthForm from './components/AuthForm';
+import Header from './components/Header';
 
 function App () {
   return (
     <div className='light-theme'>
-      <AuthForm />
+      <BrowserRouter>
+        <Header />
+        <Switch>
+          <Route exact path='/'>
+            <Redirect to='/login' />
+          </Route>
+          <Route path='/login' component={AuthForm} />
+          <Route path='/users' component={AuthForm} />
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 }
