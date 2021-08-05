@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import './App.sass';
 import AuthForm from './components/AuthForm';
 import Header from './components/Header';
+import PostCreation from './components/PostCreation';
 import Users from './components/Users';
 
 function App () {
@@ -16,6 +17,7 @@ function App () {
           </Route>
           <Route path='/login' component={AuthForm} />
           <Route path='/users' component={Users} />
+          <Route path='/newPost' component={PostCreation} />
         </Switch>
       </div>
     </BrowserRouter>
