@@ -12,8 +12,8 @@ function User ({ user }) {
   );
 }
 
-export default User;
-
 User.propTypes = {
   user: PropTypes.object.isRequired,
 };
+
+export default User;

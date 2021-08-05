@@ -7,8 +7,8 @@ import Users from './components/Users';
 
 function App () {
   return (
-    <div className='light-theme'>
-      <BrowserRouter>
+    <BrowserRouter>
+      <div className='light-theme'>
         <Header />
         <Switch>
           <Route exact path='/'>
@@ -17,8 +17,8 @@ function App () {
           <Route path='/login' component={AuthForm} />
           <Route path='/users' component={Users} />
         </Switch>
-      </BrowserRouter>
-    </div>
+      </div>
+    </BrowserRouter>
   );
 }
 
