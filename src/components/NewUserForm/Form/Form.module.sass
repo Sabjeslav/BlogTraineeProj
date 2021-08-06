@@ -1,0 +1,46 @@
+.formWrapper
+  display: flex
+  flex-flow: column nowrap
+
+.formSection
+  display: flex
+  flex-direction: column
+  height: 82px
+
+.formContainer
+  width: 100%
+  padding: 5px
+
+.inputField
+  height: 50px
+  margin-top: 10px
+  border: none
+  border-bottom: 2px solid #acacac
+  outline: none
+  padding: 0 10px
+  font-size: 18px
+  &:focus
+    border-color: #000
+
+.submitBtn
+  width: 30%
+  align-self: center
+  padding: 10px
+  cursor: pointer
+  background-color: #4796ff
+  transition: all .3s
+  color: #fff
+  font-size: 20px
+  border: none
+  outline: none
+  border-radius: 5px
+  margin-top: 10px
+  &:hover
+    background-color: #448ceb
+    box-shadow: 0px 2px 7px 2px rgba(34, 60, 80, 0.4)
+
+.errorMsg
+  color: red
+  margin-top: 5px
+  margin-left: 10px
+  font-size: 14px

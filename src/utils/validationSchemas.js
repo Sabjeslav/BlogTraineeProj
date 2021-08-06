@@ -1,16 +1,30 @@
 import * as Yup from 'yup';
 
-export const SignupSchema = Yup.object().shape({
+const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}$/gm;
+
+export const newUserSchema = Yup.object().shape({
   username: Yup.string()
     .min(2, 'Too short!')
     .max(30, 'Too Long!')
     .required('Enter name'),
   password: Yup.string()
-    .matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}$/gm, {
+    .matches(passwordRegex, {
       message: 'Password must contain at least 1 capital letter and 1 number',
       excludeEmptyString: true,
     })
     .min(6, 'Password must be longer than 6 symbols')
+    .required('Enter password'),
+  email: Yup.string()
+    .email('Invalid email')
+    .required('Enter email'),
+});
+
+export const loginSchema = Yup.object().shape({
+  password: Yup.string()
+    .matches(passwordRegex, {
+      message: 'Password must contain at least 1 capital letter and 1 number',
+      excludeEmptyString: true,
+    })
     .required('Enter password'),
   email: Yup.string()
     .email('Invalid email')
