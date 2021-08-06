@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
 import SignInForm from '../SignInForm';
 import style from './Profile.module.sass';
+import { useHistory } from 'react-router-dom';
 
 const axios = require('axios');
 
 function Profile () {
+  const history = useHistory();
   const token = localStorage.getItem('token');
   const [user, setUser] = useState({});
   const logOut = () => {
     localStorage.removeItem('token');
-    return <Redirect to='/signIn' component={SignInForm} />;
+    history.push('/signIn');
   };
   const getUser = async () => {
     await axios({

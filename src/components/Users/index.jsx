@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import User from './User';
 import Spinner from '../Spinner';
-import style from './Users.module.sass'
+import style from './Users.module.sass';
 const axios = require('axios');
 
 function Users () {
