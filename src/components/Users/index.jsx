@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import User from './User';
 import Spinner from '../Spinner';
+import style from './Users.module.sass'
 const axios = require('axios');
 
 function Users () {
@@ -24,7 +25,7 @@ function Users () {
     return <Spinner />;
   }
   return (
-    <div>
+    <div className={style.usersWrapper}>
       <h1>User list</h1>
       {users.map(user => {
         return <User key={user._id} user={user} />;

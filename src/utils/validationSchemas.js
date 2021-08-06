@@ -1,10 +1,10 @@
 import * as Yup from 'yup';
 
 export const SignupSchema = Yup.object().shape({
-  login: Yup.string()
+  username: Yup.string()
     .min(2, 'Too short!')
     .max(30, 'Too Long!')
-    .required('Enter login'),
+    .required('Enter name'),
   password: Yup.string()
     .matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}$/gm, {
       message: 'Password must contain at least 1 capital letter and 1 number',
