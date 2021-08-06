@@ -29,7 +29,6 @@ function SignInForm () {
               })
               .then(res => {
                 localStorage.setItem('token', res.data.token);
-                <Redirect to='/profile' component={Profile} />;
               })
               .catch(err => {
                 console.error(err);

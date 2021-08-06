@@ -1,11 +1,12 @@
 import React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { newPostSchema } from '../../utils/validationSchemas';
-import style from './PostCreation.sass';
+import style from './PostCreation.module.sass';
+const cx = require('classnames');
 
 function PostCreation () {
   return (
-    <div>
+    <div className={style.wrapper}>
       <h1>New post</h1>
       <Formik
         initialValues={{
@@ -15,56 +16,54 @@ function PostCreation () {
         }}
         validationSchema={newPostSchema}
         onSubmit={async values => {
-          await new Promise(r => setTimeout(r, 500));
           alert(JSON.stringify(values, null, 2));
         }}
       >
         <Form className={style.formWrapper}>
           <div className={style.formSection}>
-            <label htmlFor='login'>Login</label>
             <Field
               className={style.inputField}
-              name='login'
-              placeholder='Login'
+              name='title'
+              placeholder='Title'
             />
             <ErrorMessage
               component='div'
               className={style.errorMsg}
-              name='login'
+              name='title'
             />
           </div>
 
           <div className={style.formSection}>
-            <label htmlFor='password'>Password</label>
+            <label htmlFor='fullText'>Full text</label>
             <Field
-              className={style.inputField}
-              name='password'
-              placeholder='Password'
-              type='password'
+              className={cx(style.inputField, style.inputArea)}
+              name='fullText'
+              as='textarea'
+              placeholder='Full text'
+              type='text'
             />
             <ErrorMessage
               component='div'
               className={style.errorMsg}
-              name='password'
+              name='fullText'
             />
           </div>
 
           <div className={style.formSection}>
-            <label htmlFor='email'>Email</label>
             <Field
               className={style.inputField}
-              name='email'
-              placeholder='example@mail.to'
-              type='email'
+              name='description'
+              placeholder='Description'
+              type='text'
             />
             <ErrorMessage
               component='div'
               className={style.errorMsg}
-              name='email'
+              name='description'
             />
           </div>
           <button className={style.submitBtn} type='submit'>
-            Sign in
+            Post
           </button>
         </Form>
       </Formik>

@@ -21,7 +21,6 @@ function Profile () {
       },
     })
       .then(res => {
-        console.log(res);
         setUser(res.data);
       })
       .catch(err => {
