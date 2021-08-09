@@ -3,14 +3,14 @@ import style from './Profile.module.sass';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { USER_ACTION_TYPES } from '../../actions/actions';
+import cx from 'classnames';
 
 const axios = require('axios');
 
 function Profile (props) {
-  const { toggleLogout } = props;
+  const { toggleLogout, postUser, user } = props;
   const history = useHistory();
   const token = localStorage.getItem('token');
-  const [user, setUser] = useState({});
   const logOut = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('isLogged');
@@ -26,7 +26,8 @@ function Profile (props) {
       },
     })
       .then(res => {
-        setUser(res.data);
+        console.log(res.data);
+        postUser(res.data);
       })
       .catch(err => {
         console.error(err);
@@ -50,8 +51,12 @@ function Profile (props) {
         <div className={style.rowCaption}>Created at:</div>
         <div className={style.rowContent}>{user.dateCreated}</div>
       </div>
-      <div className={style.profileRow}>
-        <button className={style.logoutBtn} onClick={logOut}>
+      <div className={cx(style.profileRow, style.buttonRow)}>
+        <button className={style.profileBtn}>Your posts</button>
+        <button
+          className={cx(style.profileBtn, style.warningBtn)}
+          onClick={logOut}
+        >
           Log out
         </button>
       </div>
@@ -63,6 +68,8 @@ const mapStateToProps = state => state;
 
 const mapDispatchToProps = dispatch => {
   return {
+    postUser: newUser =>
+      dispatch({ type: USER_ACTION_TYPES.POST_USER, newUser }),
     toggleLogout: () => dispatch({ type: USER_ACTION_TYPES.TOGGLE_LOGOUT }),
   };
 };
