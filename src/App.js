@@ -8,23 +8,30 @@ import PostCreation from './components/PostCreation';
 import Profile from './components/Profile';
 import Users from './components/Users';
 import SignInForm from './components/SignInForm';
+import { Provider } from 'react-redux';
+import currentUserStore from './store/currentUser.store';
+import Forbidden from './components/Forbidden';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App () {
   return (
     <BrowserRouter>
       <div className='light-theme'>
         <PageContainer>
-          <Header />
-          <Switch>
-            <Route exact path='/'>
-              <Redirect to='/users' component={Users} />
-            </Route>
-            <Route path='/signUp' component={SignUpForm} />
-            <Route path='/users' component={Users} />
-            <Route path='/newPost' component={PostCreation} />
-            <Route path='/profile' component={Profile} />
-            <Route path='/signIn' component={SignInForm} />
-          </Switch>
+          <Provider store={currentUserStore}>
+            <Header />
+            <Switch>
+              <Route exact path='/'>
+                <Redirect to='/users' component={Users} />
+              </Route>
+              <Route path='/signUp' component={SignUpForm} />
+              <Route path='/users' component={Users} />
+              <ProtectedRoute path='/newPost' component={PostCreation} />
+              <ProtectedRoute path='/profile' component={Profile} />
+              <Route path='/signIn' component={SignInForm} />
+              <Route exact path='/forbidden' component={Forbidden} />
+            </Switch>
+          </Provider>
         </PageContainer>
       </div>
     </BrowserRouter>

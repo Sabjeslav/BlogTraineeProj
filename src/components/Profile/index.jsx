@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import SignInForm from '../SignInForm';
 import style from './Profile.module.sass';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { USER_ACTION_TYPES } from '../../actions/actions';
 
 const axios = require('axios');
 
-function Profile () {
+function Profile (props) {
+  const { toggleLogout } = props;
   const history = useHistory();
   const token = localStorage.getItem('token');
   const [user, setUser] = useState({});
   const logOut = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('isLogged');
+    toggleLogout();
     history.push('/signIn');
   };
   const getUser = async () => {
@@ -55,4 +59,12 @@ function Profile () {
   );
 }
 
-export default Profile;
+const mapStateToProps = state => state;
+
+const mapDispatchToProps = dispatch => {
+  return {
+    toggleLogout: () => dispatch({ type: USER_ACTION_TYPES.TOGGLE_LOGOUT }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
