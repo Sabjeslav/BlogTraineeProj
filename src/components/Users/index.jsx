@@ -55,9 +55,9 @@ const mapDispatchToProps = dispatch => {
     postUsers: newUsers =>
       dispatch({ type: USERS_ACTION_TYPES.POST_USERS, newUsers }),
     enableIsFetching: () =>
-      dispatch({ type: USERS_ACTION_TYPES.ENABLE_ISFETCHING }),
+      dispatch({ type: USERS_ACTION_TYPES.ENABLE_USERS_ISFETCHING }),
     disableIsFetching: () =>
-      dispatch({ type: USERS_ACTION_TYPES.DISABLE_ISFETCHING }),
+      dispatch({ type: USERS_ACTION_TYPES.DISABLE_USERS_ISFETCHING }),
   };
 };
 

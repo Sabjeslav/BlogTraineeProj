@@ -12,6 +12,7 @@ import { Provider } from 'react-redux';
 import store from './store/store';
 import Forbidden from './components/Forbidden';
 import ProtectedRoute from './components/ProtectedRoute';
+import Posts from './components/Posts';
 
 function App () {
   return (
@@ -30,6 +31,7 @@ function App () {
               <ProtectedRoute path='/profile' component={CurrentUserProfile} />
               <Route path='/signIn' component={SignInForm} />
               <Route exact path='/forbidden' component={Forbidden} />
+              <Route exact path='/posts' component={Posts} />
             </Switch>
           </Provider>
         </PageContainer>

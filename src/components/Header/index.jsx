@@ -16,6 +16,13 @@ function Header (props) {
           >
             <div>Users</div>
           </NavLink>
+          <NavLink
+            className={style.link}
+            activeClassName={style.activeLink}
+            to='/posts'
+          >
+            <div>Posts</div>
+          </NavLink>
           {isLogged ? null : (
             <NavLink
               className={style.link}

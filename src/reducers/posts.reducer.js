@@ -1,22 +1,22 @@
-import { USERS_ACTION_TYPES } from '../actions/actions';
+import { POSTS_ACTION_TYPES } from '../actions/actions';
 
-const usersInitialState = {
-  users: [],
+const postsInitialState = {
+  posts: [],
   isFetching: false,
   loaded: false,
 };
 
-function usersReducer (state = usersInitialState, action) {
+function postsReducer (state = postsInitialState, action) {
   switch (action.type) {
-    case USERS_ACTION_TYPES.GET_USERS:
+    case POSTS_ACTION_TYPES.GET_POSTS:
       return { ...state };
-    case USERS_ACTION_TYPES.POST_USERS:
+    case POSTS_ACTION_TYPES.UPLOAD_POSTS:
       return { ...state, users: action.newUsers };
-    case USERS_ACTION_TYPES.ENABLE_USERS_ISFETCHING: {
+    case POSTS_ACTION_TYPES.ENABLE_POSTS_ISFETCHING: {
       if (state.loaded) return state;
       return { ...state, isFetching: true };
     }
-    case USERS_ACTION_TYPES.DISABLE_USERS_ISFETCHING: {
+    case POSTS_ACTION_TYPES.DISABLE_POSTS_ISFETCHING: {
       return { ...state, isFetching: false, loaded: true };
     }
     default:
