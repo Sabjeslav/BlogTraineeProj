@@ -7,17 +7,24 @@ import { connect } from 'react-redux';
 const axios = require('axios');
 
 function Users (props) {
-  const { users, postUsers, isFetching, toggleIsFetching } = props;
+  const {
+    users,
+    postUsers,
+    isFetching,
+    enableIsFetching,
+    disableIsFetching,
+  } = props;
   // const [users, setUsers] = useState([]);
   // const [isFetching, setIsFetching] = useState(false);
   const getUsers = async () => {
-    toggleIsFetching();
+    enableIsFetching();
     axios
       .get('https://nodejs-test-api-blog.herokuapp.com/api/v1/users')
       .then(response => {
         postUsers(response.data);
-        toggleIsFetching();
-      });
+        disableIsFetching();
+      })
+      .catch(err => console.error(err));
   };
 
   useEffect(() => {
@@ -47,8 +54,10 @@ const mapDispatchToProps = dispatch => {
     getUsers: () => dispatch({ type: USERS_ACTION_TYPES.GET_USERS }),
     postUsers: newUsers =>
       dispatch({ type: USERS_ACTION_TYPES.POST_USERS, newUsers }),
-    toggleIsFetching: () =>
-      dispatch({ type: USERS_ACTION_TYPES.TOGGLE_ISFETCHING }),
+    enableIsFetching: () =>
+      dispatch({ type: USERS_ACTION_TYPES.ENABLE_ISFETCHING }),
+    disableIsFetching: () =>
+      dispatch({ type: USERS_ACTION_TYPES.DISABLE_ISFETCHING }),
   };
 };
 

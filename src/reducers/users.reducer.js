@@ -3,6 +3,7 @@ import { USERS_ACTION_TYPES } from '../actions/actions';
 const usersInitialState = {
   users: [],
   isFetching: false,
+  loaded: false,
 };
 
 function usersReducer (state = usersInitialState, action) {
@@ -11,8 +12,12 @@ function usersReducer (state = usersInitialState, action) {
       return { ...state };
     case USERS_ACTION_TYPES.POST_USERS:
       return { ...state, users: action.newUsers };
-    case USERS_ACTION_TYPES.TOGGLE_ISFETCHING: {
-      return { ...state, isFetching: !state.isFetching };
+    case USERS_ACTION_TYPES.ENABLE_ISFETCHING: {
+      if (state.loaded) return state;
+      return { ...state, isFetching: true };
+    }
+    case USERS_ACTION_TYPES.DISABLE_ISFETCHING: {
+      return { ...state, isFetching: false, loaded: true };
     }
     default:
       return state;
