@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import './App.sass';
-import SignUpForm from './components/NewUserForm';
+import SignUpForm from './components/SignUpForm';
 import Header from './components/Header';
 import PageContainer from './components/PageContainer';
 import PostCreation from './components/PostCreation';

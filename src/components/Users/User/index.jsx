@@ -6,8 +6,9 @@ import style from './User.module.sass';
 function User ({ user }) {
   return (
     <div className={style.userWrapper}>
-      <div>Name: {user.name}</div>
-      <div>Email: {user.email}</div>
+      <div className={style.userAttr}>{user.name}</div>
+      <div className={style.userAttr}>{user.email}</div>
+      <button className={style.viewBtn}>View profile</button>
     </div>
   );
 }

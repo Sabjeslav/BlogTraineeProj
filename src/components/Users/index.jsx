@@ -26,7 +26,10 @@ function Users () {
   }
   return (
     <div className={style.usersWrapper}>
-      <h1>User list</h1>
+      <div>
+        <span className={style.columnHeader}>Name</span>
+        <span className={style.columnHeader}>Email</span>
+      </div>
       {users.map(user => {
         return <User key={user._id} user={user} />;
       })}
