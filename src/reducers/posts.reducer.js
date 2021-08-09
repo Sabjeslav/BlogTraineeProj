@@ -11,7 +11,7 @@ function postsReducer (state = postsInitialState, action) {
     case POSTS_ACTION_TYPES.GET_POSTS:
       return { ...state };
     case POSTS_ACTION_TYPES.UPLOAD_POSTS:
-      return { ...state, users: action.newUsers };
+      return { ...state, posts: action.newPosts };
     case POSTS_ACTION_TYPES.ENABLE_POSTS_ISFETCHING: {
       if (state.loaded) return state;
       return { ...state, isFetching: true };
@@ -24,4 +24,4 @@ function postsReducer (state = postsInitialState, action) {
   }
 }
 
-export default usersReducer;
+export default postsReducer;
