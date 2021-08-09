@@ -4,10 +4,11 @@ import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { USER_ACTION_TYPES } from '../../actions/actions';
 import cx from 'classnames';
+import UserProfile from '../UserProfile';
 
 const axios = require('axios');
 
-function Profile (props) {
+function CurrentUserProfile (props) {
   const { toggleLogout, postUser, user } = props;
   const history = useHistory();
   const token = localStorage.getItem('token');
@@ -37,19 +38,7 @@ function Profile (props) {
   }, []);
   return (
     <div className={style.profileWrapper}>
-      <div className={style.profileHeader}>Profile</div>
-      <div className={style.profileRow}>
-        <div className={style.rowCaption}>Email:</div>
-        <div className={style.rowContent}>{user.email}</div>
-      </div>
-      <div className={style.profileRow}>
-        <div className={style.rowCaption}>Name:</div>
-        <div className={style.rowContent}>{user.name}</div>
-      </div>
-      <div className={style.profileRow}>
-        <div className={style.rowCaption}>Created at:</div>
-        <div className={style.rowContent}>{user.dateCreated}</div>
-      </div>
+      <UserProfile user={user} />
       <div className={cx(style.profileRow, style.buttonRow)}>
         <button className={style.profileBtn}>Your posts</button>
         <button
@@ -73,4 +62,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(CurrentUserProfile);

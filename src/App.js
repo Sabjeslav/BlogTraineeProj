@@ -5,7 +5,7 @@ import SignUpForm from './components/SignUpForm';
 import Header from './components/Header';
 import PageContainer from './components/PageContainer';
 import PostCreation from './components/PostCreation';
-import Profile from './components/Profile';
+import CurrentUserProfile from './components/CurrentUserProfile';
 import Users from './components/Users';
 import SignInForm from './components/SignInForm';
 import { Provider } from 'react-redux';
@@ -27,7 +27,7 @@ function App () {
               <Route path='/signUp' component={SignUpForm} />
               <Route path='/users' component={Users} />
               <ProtectedRoute path='/newPost' component={PostCreation} />
-              <ProtectedRoute path='/profile' component={Profile} />
+              <ProtectedRoute path='/profile' component={CurrentUserProfile} />
               <Route path='/signIn' component={SignInForm} />
               <Route exact path='/forbidden' component={Forbidden} />
             </Switch>
