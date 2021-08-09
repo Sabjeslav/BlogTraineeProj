@@ -9,7 +9,7 @@ import Profile from './components/Profile';
 import Users from './components/Users';
 import SignInForm from './components/SignInForm';
 import { Provider } from 'react-redux';
-import currentUserStore from './store/currentUser.store';
+import store from './store/store';
 import Forbidden from './components/Forbidden';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -18,7 +18,7 @@ function App () {
     <BrowserRouter>
       <div className='light-theme'>
         <PageContainer>
-          <Provider store={currentUserStore}>
+          <Provider store={store}>
             <Header />
             <Switch>
               <Route exact path='/'>

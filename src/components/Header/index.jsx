@@ -51,14 +51,6 @@ function Header (props) {
   );
 }
 
-const mapStateToProps = state => state;
-
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     getUser: () => dispatch({ type: USER_ACTION_TYPES.GET_USER }),
-//     postUser: () => dispatch({ type: USER_ACTION_TYPES.POST_USER }),
-//     toggleLogin: () => dispatch({ type: USER_ACTION_TYPES.TOGGLE_LOGIN }),
-//   };
-// };
+const mapStateToProps = state => state.user;
 
 export default connect(mapStateToProps)(Header);

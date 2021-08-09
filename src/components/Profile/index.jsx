@@ -26,7 +26,6 @@ function Profile (props) {
       },
     })
       .then(res => {
-        console.log(res.data);
         postUser(res.data);
       })
       .catch(err => {
@@ -64,7 +63,7 @@ function Profile (props) {
   );
 }
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => state.user;
 
 const mapDispatchToProps = dispatch => {
   return {

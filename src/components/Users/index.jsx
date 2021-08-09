@@ -2,18 +2,21 @@ import React, { useState, useEffect } from 'react';
 import User from './User';
 import Spinner from '../Spinner';
 import style from './Users.module.sass';
+import { USERS_ACTION_TYPES } from '../../actions/actions';
+import { connect } from 'react-redux';
 const axios = require('axios');
 
-function Users () {
-  const [users, setUsers] = useState([]);
-  const [isFetching, setIsFetching] = useState(false);
+function Users (props) {
+  const { users, postUsers, isFetching, toggleIsFetching } = props;
+  // const [users, setUsers] = useState([]);
+  // const [isFetching, setIsFetching] = useState(false);
   const getUsers = async () => {
-    setIsFetching(true);
+    toggleIsFetching();
     axios
       .get('https://nodejs-test-api-blog.herokuapp.com/api/v1/users')
       .then(response => {
-        setUsers(response.data);
-        setIsFetching(false);
+        postUsers(response.data);
+        toggleIsFetching();
       });
   };
 
@@ -37,4 +40,16 @@ function Users () {
   );
 }
 
-export default Users;
+const mapStateToProps = state => state.users;
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getUsers: () => dispatch({ type: USERS_ACTION_TYPES.GET_USERS }),
+    postUsers: newUsers =>
+      dispatch({ type: USERS_ACTION_TYPES.POST_USERS, newUsers }),
+    toggleIsFetching: () =>
+      dispatch({ type: USERS_ACTION_TYPES.TOGGLE_ISFETCHING }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Users);
