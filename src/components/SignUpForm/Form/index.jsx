@@ -3,8 +3,10 @@ import style from './Form.module.sass';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { newUserSchema } from '../../../utils/validationSchemas';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 function LoginForm () {
+  const history = useHistory();
   return (
     <div className={style.formContainer}>
       <Formik
@@ -23,6 +25,7 @@ function LoginForm () {
             })
             .then(res => {
               console.log(res);
+              history.push('/signIn');
             })
             .catch(err => {
               console.error(err);

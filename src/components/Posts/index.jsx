@@ -13,11 +13,12 @@ function Posts (props) {
     enableIsFetching,
     disableIsFetching,
     uploadPosts,
+    userId,
   } = props;
   const getPosts = async () => {
     enableIsFetching();
     axios
-      .get('https://nodejs-test-api-blog.herokuapp.com/api/v1/posts')
+      .get('https://nodejs-test-api-blog.herokuapp.com/api/v1/posts?limit=0')
       .then(response => {
         uploadPosts(response.data);
         disableIsFetching();
@@ -34,9 +35,11 @@ function Posts (props) {
     <div className={style.postsContainer}>
       <h1>Posts</h1>
       <div className={style.postsWrapper}>
-        {posts.map(post => {
-          return <Post key={post._id} post={post} />;
-        })}
+        {userId
+          ? userId
+          : posts.map(post => {
+              return <Post key={post._id} post={post} />;
+            })}
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import User from './User';
 import Spinner from '../Spinner';
 import style from './Users.module.sass';
