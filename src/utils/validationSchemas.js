@@ -37,6 +37,7 @@ export const newPostSchema = Yup.object().shape({
     .max(50, 'Title is too long')
     .required('Enter title'),
   fullText: Yup.string()
+    .min(20, 'Description is too short')
     .max(2048, 'Description is too long')
     .required('Enter fulltext'),
   description: Yup.string().max(256, 'Description is too long'),
