@@ -31,8 +31,10 @@ function PostDetails () {
       <div className={style.postDescription}>{post.description}</div>
       <div className={style.postFullText}>{post.fullText}</div>
       <div className={style.postFullText}>
-        <FontAwesomeIcon className={style.likeIcon} icon={faHeart} />
-        {!loaded ? 0 : post.likes.length}
+        <div className={style.postLikes}>
+          <FontAwesomeIcon className={style.likeIcon} icon={faHeart} />{' '}
+          {!loaded ? 0 : post.likes.length}
+        </div>
       </div>
     </div>
   );
