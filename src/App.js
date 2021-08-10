@@ -19,6 +19,7 @@ import store from './store/store';
 import './App.sass';
 import UserPosts from './components/UserPosts';
 import Spinner from './components/Spinner';
+import PostDetails from './components/PostDetails';
 
 function App () {
   return (
@@ -34,12 +35,13 @@ function App () {
               <Route path='/signUp' component={SignUpForm} />
               <Route exact path='/users' component={Users} />
               <Route exact path='/users/:id' component={UserProfile} />
-              <Route exact path='/userposts' component={UserPosts} />
               <ProtectedRoute path='/newPost' component={PostCreation} />
               <ProtectedRoute path='/profile' component={CurrentUserProfile} />
               <Route path='/signIn' component={SignInForm} />
               <Route exact path='/forbidden' component={Forbidden} />
               <Route exact path='/posts' component={Posts} />
+              <Route exact path='/posts/:id' component={PostDetails} />
+              <Route path='/userposts' component={UserPosts} />
             </Switch>
           </Provider>
         </PageContainer>

@@ -10,7 +10,7 @@ function UserProfile (props) {
     user = users.find(u => u._id === id);
   }
   return (
-    <>
+    <div className={style.profileWrapper}>
       <div className={style.profileHeader}>Profile</div>
       <div className={style.profileContainer}>
         <div className={style.profileData}>
@@ -29,7 +29,7 @@ function UserProfile (props) {
         </div>
         <div className={style.profileData}></div>
       </div>
-    </>
+    </div>
   );
 }
 const mapStateToProps = state => state.users;

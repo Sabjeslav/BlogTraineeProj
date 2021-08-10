@@ -13,7 +13,6 @@ function Posts (props) {
     enableIsFetching,
     disableIsFetching,
     uploadPosts,
-    userId,
   } = props;
   const getPosts = async () => {
     enableIsFetching();
@@ -35,11 +34,9 @@ function Posts (props) {
     <div className={style.postsContainer}>
       <h1>Posts</h1>
       <div className={style.postsWrapper}>
-        {userId
-          ? userId
-          : posts.map(post => {
-              return <Post key={post._id} post={post} />;
-            })}
+        {posts.map(post => {
+          return <Post key={post._id} post={post} />;
+        })}
       </div>
     </div>
   );
