@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { useParams } from 'react-router';
+import { useParams, useHistory } from 'react-router';
 import axios from 'axios';
 import { API_URL } from '../../constants';
 import Spinner from '../Spinner';
@@ -17,6 +17,7 @@ function PostDetails (props) {
   const { id } = useParams();
   const [post, setPost] = useState({});
   const [loaded, setLoaded] = useState(false);
+  const history = useHistory();
   const getPostDetails = async () => {
     await axios
       .get(`${API_URL}/posts/${id}`)
@@ -26,9 +27,23 @@ function PostDetails (props) {
       })
       .catch(err => console.error(err));
   };
-  const deletePost = async () => {};
-  console.log(user);
-  console.log(post);
+  const deletePost = async () => {
+    const token = localStorage.getItem('token');
+    await axios({
+      method: 'delete',
+      url: `${API_URL}/posts/${id}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(res => {
+        console.log(res);
+        history.push('/posts');
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  };
   useEffect(() => {
     getPostDetails();
   }, []);
@@ -51,7 +66,9 @@ function PostDetails (props) {
             </div>
             <div className={cx(style.btnWrapper, style.deleteBtn)}>
               <FontAwesomeIcon icon={faTrashAlt} />
-              <button className={style.actionBtn}>Delete</button>
+              <button onClick={deletePost} className={style.actionBtn}>
+                Delete
+              </button>
             </div>
           </div>
         ) : null}
