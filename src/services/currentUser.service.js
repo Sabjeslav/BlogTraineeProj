@@ -1,5 +1,4 @@
 import axiosInstance from './axios.instance';
-import store from '../store/store';
 
 export const authUser = async user => {
   return await axiosInstance({

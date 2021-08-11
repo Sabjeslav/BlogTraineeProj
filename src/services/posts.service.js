@@ -1,5 +1,4 @@
 import axiosInstance from './axios.instance';
-import store from '../store/store';
 
 export const fetchPosts = async () => {
   return await axiosInstance({
@@ -34,7 +33,7 @@ export const deletePostById = async id => {
   });
 };
 
-export const likePost = async id => {
+export const likePostById = async id => {
   return await axiosInstance({
     method: 'put',
     url: `/posts/like/${id}`,

@@ -8,8 +8,6 @@ import { USER_ACTION_TYPES } from '../../actions/actions';
 import { Link } from 'react-router-dom';
 import { authUser } from '../../services/currentUser.service';
 
-const axios = require('axios');
-
 function SignInForm (props) {
   const history = useHistory();
   const { toggleLogin } = props;
