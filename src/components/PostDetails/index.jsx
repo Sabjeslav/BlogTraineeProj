@@ -39,6 +39,7 @@ function PostDetails (props) {
       .catch(err => console.error(err));
   };
   const likePost = async () => {
+    if (localStorage.id === user._id) return history.push('/signIn');
     if (isLiked) {
       setLikes(likes - 1);
     } else {
@@ -70,7 +71,7 @@ function PostDetails (props) {
           />
           {likes}
         </div>
-        {user._id === post.postedBy ? (
+        {localStorage.id === post.postedBy ? (
           <div className={style.postActions}>
             <div className={cx(style.btnWrapper, style.editBtn)}>
               <FontAwesomeIcon icon={faPen} />
