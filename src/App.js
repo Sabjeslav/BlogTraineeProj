@@ -26,6 +26,9 @@ import { API_URL } from './constants';
 
 import './App.sass';
 
+import { fetchPosts } from './services/posts.service';
+import { fetchUsers } from './services/users.service';
+
 function App (props) {
   const {
     postUsers,
@@ -38,44 +41,38 @@ function App (props) {
   } = props;
   const getUsers = async () => {
     enableUsersFetching();
-    axios
-      .get(`${API_URL}/users`)
-      .then(response => {
-        postUsers(response.data);
-        disableUsersFetching();
-      })
-      .catch(err => console.error(err));
+    await fetchUsers().then(res => {
+      postUsers(res);
+      disableUsersFetching();
+    });
   };
   const getPosts = async () => {
     enablePostsFetching();
-    axios
-      .get(`${API_URL}/posts?limit=0`)
-      .then(response => {
-        uploadPosts(response.data);
-        disablePostsFetching();
-      })
-      .catch(err => console.error(err));
+    await fetchPosts().then(res => {
+      uploadPosts(res);
+      disablePostsFetching();
+    });
   };
-  const getCurrentUser = async () => {
-    const token = localStorage.getItem('token');
-    await axios({
-      method: 'get',
-      url: `${API_URL}/auth/user`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then(res => {
-        postUser(res.data);
-      })
-      .catch(err => {
-        console.error(err);
-      });
-  };
+  // const getCurrentUser = async () => {
+  //   const token = localStorage.getItem('token');
+  //   await axios({
+  //     method: 'get',
+  //     url: `${API_URL}/auth/user`,
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   })
+  //     .then(res => {
+  //       postUser(res.data);
+  //     })
+  //     .catch(err => {
+  //       console.error(err);
+  //     });
+  // };
   useEffect(() => {
     getUsers();
     getPosts();
-    getCurrentUser();
+    // getCurrentUser();
   }, []);
   return (
     <BrowserRouter>

@@ -6,12 +6,13 @@ import style from './SignInForm.module.sass';
 import { useHistory } from 'react-router';
 import { USER_ACTION_TYPES } from '../../actions/actions';
 import { Link } from 'react-router-dom';
+import { authUser } from '../../services/currentUser.service';
 
 const axios = require('axios');
 
 function SignInForm (props) {
   const history = useHistory();
-  const { postUser, toggleLogin } = props;
+  const { toggleLogin } = props;
   return (
     <div className={style.wrapper}>
       <h1>Sign in</h1>
@@ -23,14 +24,12 @@ function SignInForm (props) {
           }}
           validationSchema={loginSchema}
           onSubmit={async (values, actions) => {
-            axios
-              .post('https://nodejs-test-api-blog.herokuapp.com/api/v1/auth', {
-                email: values.email,
-                password: values.password,
-              })
+            await authUser({
+              email: values.email,
+              password: values.password,
+            })
               .then(res => {
-                console.log('Logged');
-                localStorage.setItem('token', res.data.token);
+                localStorage.setItem('token', res.token);
                 localStorage.setItem('isLogged', true);
                 toggleLogin();
                 history.push('/profile');

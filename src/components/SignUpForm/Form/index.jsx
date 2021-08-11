@@ -4,6 +4,7 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { newUserSchema } from '../../../utils/validationSchemas';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import { API_URL } from '../../../constants';
 
 function LoginForm () {
   const history = useHistory();
@@ -18,7 +19,7 @@ function LoginForm () {
         validationSchema={newUserSchema}
         onSubmit={async (values, actions) => {
           axios
-            .post('https://nodejs-test-api-blog.herokuapp.com/api/v1/users', {
+            .post(`${API_URL}/users`, {
               email: values.email,
               password: values.password,
               name: values.username,

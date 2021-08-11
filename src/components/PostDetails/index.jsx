@@ -17,7 +17,9 @@ function PostDetails (props) {
   const { id } = useParams();
   const [post, setPost] = useState({});
   const [loaded, setLoaded] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
   const history = useHistory();
+  const token = localStorage.getItem('token');
   const getPostDetails = async () => {
     await axios
       .get(`${API_URL}/posts/${id}`)
@@ -28,7 +30,6 @@ function PostDetails (props) {
       .catch(err => console.error(err));
   };
   const deletePost = async () => {
-    const token = localStorage.getItem('token');
     await axios({
       method: 'delete',
       url: `${API_URL}/posts/${id}`,
@@ -36,17 +37,33 @@ function PostDetails (props) {
         Authorization: `Bearer ${token}`,
       },
     })
+      .then(res => history.push('/posts'))
+      .catch(err => console.error(err));
+  };
+  const likePost = async () => {
+    await axios({
+      method: 'put',
+      url: `${API_URL}/posts/like/${id}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then(res => {
-        console.log(res);
-        history.push('/posts');
+        setIsLiked(!isLiked);
       })
-      .catch(err => {
-        console.error(err);
-      });
+      .catch(err => console.error(err));
   };
   useEffect(() => {
     getPostDetails();
   }, []);
+  useEffect(() => {
+    getPostDetails();
+  }, [isLiked]);
+  useEffect(() => {
+    
+  }, [loaded])
+
+  
   if (!loaded) return <Spinner />;
   return (
     <div className={style.postWrapper}>
@@ -55,7 +72,13 @@ function PostDetails (props) {
       <div className={style.postFullText}>{post.fullText}</div>
       <div className={style.postFooter}>
         <div className={style.postLikes}>
-          <FontAwesomeIcon className={style.likeIcon} icon={faHeart} />
+          <FontAwesomeIcon
+            onClick={likePost}
+            className={cx(style.likeIcon, {
+              [style.liked]: isLiked,
+            })}
+            icon={faHeart}
+          />
           {post.likes.length}
         </div>
         {user._id === post.postedBy ? (
