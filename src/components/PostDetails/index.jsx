@@ -39,7 +39,8 @@ function PostDetails (props) {
       .catch(err => console.error(err));
   };
   const likePost = async () => {
-    if (localStorage.id === user._id) return history.push('/signIn');
+    if (localStorage.id !== user._id || !localStorage.id)
+      return history.push('/signIn');
     if (isLiked) {
       setLikes(likes - 1);
     } else {
