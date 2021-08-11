@@ -2,9 +2,8 @@ import React from 'react';
 import style from './Form.module.sass';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { newUserSchema } from '../../../utils/validationSchemas';
-import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-import { API_URL } from '../../../constants';
+import { signUp } from '../../../services/users.service';
 
 function LoginForm () {
   const history = useHistory();
@@ -18,14 +17,12 @@ function LoginForm () {
         }}
         validationSchema={newUserSchema}
         onSubmit={async (values, actions) => {
-          axios
-            .post(`${API_URL}/users`, {
-              email: values.email,
-              password: values.password,
-              name: values.username,
-            })
+          await signUp({
+            email: values.email,
+            password: values.password,
+            name: values.username,
+          })
             .then(res => {
-              console.log(res);
               history.push('/signIn');
             })
             .catch(err => {

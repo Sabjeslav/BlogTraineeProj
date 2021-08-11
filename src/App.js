@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import SignUpForm from './components/SignUpForm';
 import Header from './components/Header';
@@ -22,12 +21,12 @@ import {
   POSTS_ACTION_TYPES,
   USER_ACTION_TYPES,
 } from './actions/actions';
-import { API_URL } from './constants';
 
 import './App.sass';
 
 import { fetchPosts } from './services/posts.service';
 import { fetchUsers } from './services/users.service';
+import { fetchCurrentUser } from './services/currentUser.service';
 
 function App (props) {
   const {
@@ -53,26 +52,15 @@ function App (props) {
       disablePostsFetching();
     });
   };
-  // const getCurrentUser = async () => {
-  //   const token = localStorage.getItem('token');
-  //   await axios({
-  //     method: 'get',
-  //     url: `${API_URL}/auth/user`,
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   })
-  //     .then(res => {
-  //       postUser(res.data);
-  //     })
-  //     .catch(err => {
-  //       console.error(err);
-  //     });
-  // };
+  const getCurrentUser = async () => {
+    await fetchCurrentUser()
+      .then(res => postUser(res))
+      .catch(err => console.error(err));
+  };
   useEffect(() => {
     getUsers();
     getPosts();
-    // getCurrentUser();
+    getCurrentUser();
   }, []);
   return (
     <BrowserRouter>

@@ -3,45 +3,29 @@ import style from './Profile.module.sass';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { POSTS_ACTION_TYPES, USER_ACTION_TYPES } from '../../actions/actions';
-import { API_URL } from '../../constants';
 import cx from 'classnames';
 import UserProfile from '../UserProfile';
-
-const axios = require('axios');
+import {
+  fetchCurrentUser,
+  deleteCurrentUserAcc,
+} from '../../services/currentUser.service';
 
 function CurrentUserProfile (props) {
   const { toggleLogout, postUser, user } = props;
   const history = useHistory();
-  const token = localStorage.getItem('token');
   const logOut = () => {
     localStorage.clear();
     toggleLogout();
     history.push('/signIn');
   };
   const getUser = async () => {
-    await axios({
-      method: 'get',
-      url: `${API_URL}/auth/user`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then(res => {
-        postUser(res.data);
-      })
-      .catch(err => {
-        console.error(err);
-      });
+    await fetchCurrentUser()
+      .then(res => postUser(res))
+      .catch(err => console.error(err));
   };
   const deleteAccount = async () => {
-    await axios({
-      method: 'delete',
-      url: `${API_URL}/users/${user._id}`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then(res => {
+    await deleteCurrentUserAcc(user._id)
+      .then(() => {
         localStorage.clear();
         history.push('/signIn');
       })

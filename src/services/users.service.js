@@ -7,3 +7,15 @@ export const fetchUsers = async () => {
     url: '/users?limit=0',
   });
 };
+
+export const signUp = async user => {
+  return await axiosInstance({
+    method: 'post',
+    url: '/users',
+    data: {
+      email: user.email,
+      password: user.password,
+      name: user.name,
+    },
+  });
+};

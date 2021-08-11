@@ -9,6 +9,11 @@ import cx from 'classnames';
 
 import style from './PostDetails.module.sass';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  deletePostById,
+  getPostById,
+  likePost,
+} from '../../services/posts.service';
 
 function PostDetails (props) {
   const {
@@ -21,33 +26,20 @@ function PostDetails (props) {
   const history = useHistory();
   const token = localStorage.getItem('token');
   const getPostDetails = async () => {
-    await axios
-      .get(`${API_URL}/posts/${id}`)
+    await getPostById(id)
       .then(response => {
-        setPost(response.data);
+        setPost(response);
         setLoaded(true);
       })
       .catch(err => console.error(err));
   };
   const deletePost = async () => {
-    await axios({
-      method: 'delete',
-      url: `${API_URL}/posts/${id}`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    await deletePostById(id)
       .then(res => history.push('/posts'))
       .catch(err => console.error(err));
   };
   const likePost = async () => {
-    await axios({
-      method: 'put',
-      url: `${API_URL}/posts/like/${id}`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    await likePost()
       .then(res => {
         setIsLiked(!isLiked);
       })
@@ -59,11 +51,8 @@ function PostDetails (props) {
   useEffect(() => {
     getPostDetails();
   }, [isLiked]);
-  useEffect(() => {
-    
-  }, [loaded])
+  useEffect(() => {}, [loaded]);
 
-  
   if (!loaded) return <Spinner />;
   return (
     <div className={style.postWrapper}>

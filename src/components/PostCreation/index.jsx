@@ -2,11 +2,10 @@ import React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { newPostSchema } from '../../utils/validationSchemas';
 import style from './PostCreation.module.sass';
-import axios from 'axios';
+import { createPost } from '../../services/posts.service';
 const cx = require('classnames');
 
 function PostCreation () {
-  const token = localStorage.getItem('token');
   return (
     <div className={style.wrapper}>
       <h1>New post</h1>
@@ -18,17 +17,10 @@ function PostCreation () {
         }}
         validationSchema={newPostSchema}
         onSubmit={async (values, actions) => {
-          await axios({
-            method: 'post',
-            url: 'https://nodejs-test-api-blog.herokuapp.com/api/v1/posts',
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-            data: {
-              title: values.title,
-              fullText: values.fullText,
-              description: values.description,
-            },
+          await createPost({
+            title: values.title,
+            fullText: values.fullText,
+            description: values.description,
           })
             .then(res => {
               console.log(res.data);

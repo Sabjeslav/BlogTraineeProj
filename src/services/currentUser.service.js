@@ -12,9 +12,16 @@ export const authUser = async user => {
   });
 };
 
-export const login = async () => {
+export const fetchCurrentUser = async () => {
   return await axiosInstance({
     method: 'get',
     url: '/auth/user',
+  });
+};
+
+export const deleteCurrentUserAcc = async id => {
+  return await axiosInstance({
+    method: 'delete',
+    url: `/users/${id}`,
   });
 };
