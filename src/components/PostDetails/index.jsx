@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useParams, useHistory } from 'react-router';
-import axios from 'axios';
-import { API_URL } from '../../constants';
 import Spinner from '../Spinner';
 import { faHeart, faPen, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import cx from 'classnames';
@@ -12,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   deletePostById,
   getPostById,
-  likePost,
+  likePostById,
 } from '../../services/posts.service';
 
 function PostDetails (props) {
@@ -23,36 +21,38 @@ function PostDetails (props) {
   const [post, setPost] = useState({});
   const [loaded, setLoaded] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
+  const [likes, setLikes] = useState(null);
   const history = useHistory();
-  const token = localStorage.getItem('token');
   const getPostDetails = async () => {
     await getPostById(id)
       .then(response => {
         setPost(response);
+        setLikes(response.likes.length);
+        setIsLiked(response.likes.includes(localStorage.id));
         setLoaded(true);
       })
       .catch(err => console.error(err));
   };
   const deletePost = async () => {
     await deletePostById(id)
-      .then(res => history.push('/posts'))
+      .then(() => history.push('/posts'))
       .catch(err => console.error(err));
   };
   const likePost = async () => {
-    await likePost()
-      .then(res => {
-        setIsLiked(!isLiked);
-      })
+    if (isLiked) {
+      setLikes(likes - 1);
+    } else {
+      setLikes(likes + 1);
+    }
+    setIsLiked(!isLiked);
+    await likePostById(id)
+      .then(() => {})
       .catch(err => console.error(err));
   };
   useEffect(() => {
     getPostDetails();
   }, []);
-  useEffect(() => {
-    getPostDetails();
-  }, [isLiked]);
-  useEffect(() => {}, [loaded]);
-
+  console.log('isLiked', isLiked);
   if (!loaded) return <Spinner />;
   return (
     <div className={style.postWrapper}>
@@ -68,7 +68,7 @@ function PostDetails (props) {
             })}
             icon={faHeart}
           />
-          {post.likes.length}
+          {likes}
         </div>
         {user._id === post.postedBy ? (
           <div className={style.postActions}>
@@ -90,4 +90,5 @@ function PostDetails (props) {
 }
 
 const mapStateToProps = state => state;
+
 export default connect(mapStateToProps)(PostDetails);

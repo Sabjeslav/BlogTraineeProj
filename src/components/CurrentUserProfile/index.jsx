@@ -20,7 +20,11 @@ function CurrentUserProfile (props) {
   };
   const getUser = async () => {
     await fetchCurrentUser()
-      .then(res => postUser(res))
+      .then(res => {
+        postUser(res);
+        localStorage.setItem('id', res._id);
+      })
+
       .catch(err => console.error(err));
   };
   const deleteAccount = async () => {

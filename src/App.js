@@ -58,9 +58,9 @@ function App (props) {
       .catch(err => console.error(err));
   };
   useEffect(() => {
+    getCurrentUser();
     getUsers();
     getPosts();
-    getCurrentUser();
   }, []);
   return (
     <BrowserRouter>
