@@ -4,14 +4,16 @@ import { useParams } from 'react-router';
 import axios from 'axios';
 import { API_URL } from '../../constants';
 import Spinner from '../Spinner';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faPen, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import cx from 'classnames';
 
 import style from './PostDetails.module.sass';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function PostDetails (props) {
-  const { user } = props;
+  const {
+    user: { user },
+  } = props;
   const { id } = useParams();
   const [post, setPost] = useState({});
   const [loaded, setLoaded] = useState(false);
@@ -24,6 +26,7 @@ function PostDetails (props) {
       })
       .catch(err => console.error(err));
   };
+  const deletePost = async () => {};
   console.log(user);
   console.log(post);
   useEffect(() => {
@@ -35,11 +38,23 @@ function PostDetails (props) {
       <div className={style.postTitle}>{post.title}</div>
       <div className={style.postDescription}>{post.description}</div>
       <div className={style.postFullText}>{post.fullText}</div>
-      <div className={style.postFullText}>
+      <div className={style.postFooter}>
         <div className={style.postLikes}>
-          <FontAwesomeIcon className={cx(style.likeIcon)} icon={faHeart} />
+          <FontAwesomeIcon className={style.likeIcon} icon={faHeart} />
           {post.likes.length}
         </div>
+        {user._id === post.postedBy ? (
+          <div className={style.postActions}>
+            <div className={cx(style.btnWrapper, style.editBtn)}>
+              <FontAwesomeIcon icon={faPen} />
+              <button className={style.actionBtn}>Edit</button>
+            </div>
+            <div className={cx(style.btnWrapper, style.deleteBtn)}>
+              <FontAwesomeIcon icon={faTrashAlt} />
+              <button className={style.actionBtn}>Delete</button>
+            </div>
+          </div>
+        ) : null}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 .postWrapper
   background-color: #fff
-  width: 50%
+  width: 1000px
   display: flex
   flex-direction: column
   padding: 20px 50px
@@ -28,3 +28,40 @@
 
 .liked
   color: #ff0000
+
+.postFooter
+  display: flex
+  justify-content: space-between
+  align-items: center
+  margin-top: 30px
+
+.postActions
+  display: flex
+  width: 25%
+
+.actionBtn
+  border: none
+  outline: none
+  background-color: transparent
+  text-transform: uppercase
+  font-weight: 700
+  font-size: 14px
+  margin-left: 10px
+  cursor: inherit
+
+.btnWrapper
+  cursor: pointer
+  // border: 2px solid #868686
+  border-radius: 2px
+  background-color: #dbdbdb
+  padding: 5px 15px
+  transition: background-color .2s
+
+.editBtn
+  &:hover
+    background-color: #ffc341
+
+.deleteBtn
+  margin-left: 10px
+  &:hover
+    background-color: #ff4141
