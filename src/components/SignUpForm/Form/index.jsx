@@ -11,7 +11,7 @@ function LoginForm () {
     <div className={style.formContainer}>
       <Formik
         initialValues={{
-          username: '',
+          name: '',
           password: '',
           email: '',
         }}
@@ -20,7 +20,7 @@ function LoginForm () {
           await signUp({
             email: values.email,
             password: values.password,
-            name: values.username,
+            name: values.name,
           })
             .then(res => {
               history.push('/signIn');
@@ -35,14 +35,14 @@ function LoginForm () {
           <div className={style.formSection}>
             <Field
               className={style.inputField}
-              name='username'
+              name='name'
               placeholder='Name'
               type='text'
             />
             <ErrorMessage
               component='div'
               className={style.errorMsg}
-              name='username'
+              name='name'
             />
           </div>
           <div className={style.formSection}>

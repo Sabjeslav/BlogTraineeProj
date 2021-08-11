@@ -3,10 +3,9 @@ import * as Yup from 'yup';
 const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}$/gm;
 
 export const newUserSchema = Yup.object().shape({
-  username: Yup.string()
+  name: Yup.string()
     .min(2, 'Too short!')
-    .max(30, 'Too Long!')
-    .required('Enter name'),
+    .max(30, 'Too Long!'),
   password: Yup.string()
     .matches(passwordRegex, {
       message: 'Password must contain at least 1 capital letter and 1 number',
