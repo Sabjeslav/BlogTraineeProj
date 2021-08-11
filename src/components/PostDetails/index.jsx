@@ -1,26 +1,31 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import { useParams } from 'react-router';
+import axios from 'axios';
+import { API_URL } from '../../constants';
 import Spinner from '../Spinner';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import cx from 'classnames';
 
 import style from './PostDetails.module.sass';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-function PostDetails () {
+function PostDetails (props) {
+  const { user } = props;
   const { id } = useParams();
   const [post, setPost] = useState({});
   const [loaded, setLoaded] = useState(false);
   const getPostDetails = async () => {
     await axios
-      .get(`https://nodejs-test-api-blog.herokuapp.com/api/v1/posts/${id}`)
+      .get(`${API_URL}/posts/${id}`)
       .then(response => {
         setPost(response.data);
         setLoaded(true);
       })
       .catch(err => console.error(err));
   };
-
+  console.log(user);
+  console.log(post);
   useEffect(() => {
     getPostDetails();
   }, []);
@@ -32,12 +37,13 @@ function PostDetails () {
       <div className={style.postFullText}>{post.fullText}</div>
       <div className={style.postFullText}>
         <div className={style.postLikes}>
-          <FontAwesomeIcon className={style.likeIcon} icon={faHeart} />{' '}
-          {!loaded ? 0 : post.likes.length}
+          <FontAwesomeIcon className={cx(style.likeIcon)} icon={faHeart} />
+          {post.likes.length}
         </div>
       </div>
     </div>
   );
 }
 
-export default PostDetails;
+const mapStateToProps = state => state;
+export default connect(mapStateToProps)(PostDetails);

@@ -1,20 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import style from './Profile.module.sass';
-import { Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { POSTS_ACTION_TYPES, USER_ACTION_TYPES } from '../../actions/actions';
+import { API_URL } from '../../constants';
 import cx from 'classnames';
 import UserProfile from '../UserProfile';
-import Posts from '../Posts';
-import Post from '../Posts/Post';
 
 const axios = require('axios');
 
 function CurrentUserProfile (props) {
-  const { toggleLogout, postUser, user, posts } = props;
+  const { toggleLogout, postUser, user } = props;
   const history = useHistory();
   const token = localStorage.getItem('token');
-  const userPosts = posts.posts.filter(post => post.postedBy === user._id);
   const logOut = () => {
     localStorage.clear();
     toggleLogout();
@@ -23,7 +21,7 @@ function CurrentUserProfile (props) {
   const getUser = async () => {
     await axios({
       method: 'get',
-      url: 'https://nodejs-test-api-blog.herokuapp.com/api/v1/auth/user',
+      url: `${API_URL}/auth/user`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -38,7 +36,7 @@ function CurrentUserProfile (props) {
   const deleteAccount = async () => {
     await axios({
       method: 'delete',
-      url: `https://nodejs-test-api-blog.herokuapp.com/api/v1/users/${user._id}`,
+      url: `${API_URL}/users/${user._id}`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -62,9 +60,7 @@ function CurrentUserProfile (props) {
         <button className={style.profileBtn} onClick={showPosts}>
           Your posts
         </button>
-        <button className={style.profileBtn}>
-          Edit profile
-        </button>
+        <button className={style.profileBtn}>Edit profile</button>
         <button
           className={cx(style.profileBtn, style.warningBtn)}
           onClick={deleteAccount}

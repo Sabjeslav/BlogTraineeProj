@@ -9,7 +9,6 @@ export const UserPosts = props => {
     user: { user },
   } = props;
   const userPosts = posts.filter(post => post.postedBy === user._id);
-  console.log(userPosts);
   return (
     <div className={style.postsWrapper}>
       {userPosts.map(post => {

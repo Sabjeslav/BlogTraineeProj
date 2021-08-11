@@ -1,32 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import style from './Posts.module.sass';
-import { POSTS_ACTION_TYPES } from '../../actions/actions';
 import Post from './Post';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import Spinner from '../Spinner';
 
 function Posts (props) {
-  const {
-    posts,
-    isFetching,
-    enableIsFetching,
-    disableIsFetching,
-    uploadPosts,
-  } = props;
-  const getPosts = async () => {
-    enableIsFetching();
-    axios
-      .get('https://nodejs-test-api-blog.herokuapp.com/api/v1/posts?limit=0')
-      .then(response => {
-        uploadPosts(response.data);
-        disableIsFetching();
-      })
-      .catch(err => console.error(err));
-  };
-  useEffect(() => {
-    getPosts();
-  }, []);
+  const { posts, isFetching } = props;
   if (isFetching) {
     return <Spinner />;
   }
@@ -44,15 +23,4 @@ function Posts (props) {
 
 const mapStateToProps = state => state.posts;
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getPosts: () => dispatch({ type: POSTS_ACTION_TYPES.GET_POSTS }),
-    uploadPosts: newPosts =>
-      dispatch({ type: POSTS_ACTION_TYPES.UPLOAD_POSTS, newPosts }),
-    enableIsFetching: () =>
-      dispatch({ type: POSTS_ACTION_TYPES.ENABLE_POSTS_ISFETCHING }),
-    disableIsFetching: () =>
-      dispatch({ type: POSTS_ACTION_TYPES.DISABLE_POSTS_ISFETCHING }),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Posts);
+export default connect(mapStateToProps)(Posts);
