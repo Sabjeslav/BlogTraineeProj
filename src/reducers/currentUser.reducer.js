@@ -1,8 +1,8 @@
 import { USER_ACTION_TYPES } from '../actions/actions';
 
 const userInitialState = {
-  isLogged: localStorage.getItem('isLogged') || false ,
-  user: {}
+  isLogged: localStorage.getItem('isLogged') || false,
+  user: {},
 };
 
 function currentUserReducer (state = userInitialState, action) {
@@ -16,7 +16,7 @@ function currentUserReducer (state = userInitialState, action) {
       return { ...state, isLogged: true };
     }
     case USER_ACTION_TYPES.TOGGLE_LOGOUT: {
-      return { ...state, isLogged: false };
+      return { ...state, user: {}, isLogged: false };
     }
     default:
       return state;
