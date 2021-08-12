@@ -41,3 +41,7 @@ export const newPostSchema = Yup.object().shape({
     .required('Enter fulltext'),
   description: Yup.string().max(256, 'Description is too long'),
 });
+
+export const newCommentSchema = Yup.object().shape({
+  
+})

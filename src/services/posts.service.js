@@ -39,3 +39,10 @@ export const likePostById = async id => {
     url: `/posts/like/${id}`,
   });
 };
+
+export const getPostComments = async id => {
+  return await axiosInstance({
+    method: 'get',
+    url: `/comments/post/${id}`,
+  });
+};
