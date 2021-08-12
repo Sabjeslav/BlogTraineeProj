@@ -5,11 +5,7 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faEllipsisV,
-  faHeart,
-  faPlay,
-} from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisV, faHeart } from '@fortawesome/free-solid-svg-icons';
 import style from './PostComment.module.sass';
 import { Form, Formik, Field, ErrorMessage } from 'formik';
 import {
@@ -74,6 +70,7 @@ function PostComment (props) {
               if (user._id === comment.commentedBy) {
                 return <span key={comment._id}>{user.name}</span>;
               }
+              return;
             })}
           </div>
           <div>{new Date(comment.dateCreated).toLocaleDateString()}</div>

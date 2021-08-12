@@ -19,6 +19,18 @@ export const createPost = async newPost => {
   });
 };
 
+export const editPost = async (id, newPost) => {
+  return await axiosInstance({
+    method: 'patch',
+    url: `/posts/${id}`,
+    data: {
+      title: newPost.title,
+      fullText: newPost.fullText,
+      description: newPost.description,
+    },
+  });
+};
+
 export const getPostById = async id => {
   return await axiosInstance({
     method: 'get',

@@ -1,39 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useParams, useHistory } from 'react-router';
-import Spinner from '../Spinner';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import cx from 'classnames';
 import {
   faHeart,
   faPen,
   faTrashAlt,
   faPlay,
 } from '@fortawesome/free-solid-svg-icons';
-import cx from 'classnames';
 
-import style from './PostDetails.module.sass';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   deletePostById,
   getPostById,
   likePostById,
   getPostComments,
   addPostComment,
+  editPost,
 } from '../../services/posts.service';
+
+import Spinner from '../Spinner';
 import PostComment from './PostComment';
-import { newCommentSchema } from '../../utils/validationSchemas';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
-import axiosInstance from '../../services/axios.instance';
+import { newCommentSchema, newPostSchema } from '../../utils/validationSchemas';
+import style from './PostDetails.module.sass';
 
 function PostDetails (props) {
   const {
     user: { user },
-    users: { users },
   } = props;
   const { id } = useParams();
   const [post, setPost] = useState({});
   const [loaded, setLoaded] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [likes, setLikes] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
   const [comments, setcomments] = useState([]);
   const history = useHistory();
   const getPostDetails = async () => {
@@ -74,7 +75,114 @@ function PostDetails (props) {
   if (!loaded) return <Spinner />;
   return (
     <div className={style.postWrapper}>
-      <div className={style.postTitle}>{post.title}</div>
+      {isEditing ? (
+        <Formik
+          initialValues={{
+            title: post.title,
+            fullText: post.fullText,
+            description: post.description,
+          }}
+          validationSchema={newPostSchema}
+          onSubmit={async (values, actions) => {
+            const newPost = {
+              title: values.title,
+              fullText: values.fullText,
+              description: values.description,
+            };
+            await editPost(post._id, newPost)
+              .then(() => {
+                setIsEditing(false);
+                setPost({ ...post, ...newPost });
+              })
+              .catch(err => console.error(err));
+          }}
+        >
+          <Form>
+            <Field
+              className={cx(style.postTitle, style.activeInput)}
+              id='title'
+              name='title'
+              placeholder='Write a title'
+            />
+            <ErrorMessage
+              className={style.errorMsg}
+              component='div'
+              name='title'
+            />
+            <Field
+              className={cx(style.postDescription, style.activeInput)}
+              id='description'
+              name='description'
+              placeholder='Description'
+            />
+            <ErrorMessage
+              className={style.errorMsg}
+              component='div'
+              name='description'
+            />
+            <Field
+              className={cx(style.postFullText, style.activeInput)}
+              id='fullText'
+              name='fullText'
+              placeholder='Fulltext'
+            />
+            <ErrorMessage
+              className={style.errorMsg}
+              component='div'
+              name='fullText'
+            />
+            <button type='submit' className={style.submitBtn}>
+              OK
+            </button>
+            <button
+              type='button'
+              onClick={() => {
+                setIsEditing(false);
+              }}
+              className={style.submitBtn}
+            >
+              Cancel
+            </button>
+          </Form>
+        </Formik>
+      ) : (
+        <>
+          <div className={style.postTitle}>{post.title}</div>
+          <div className={style.postDescription}>{post.description}</div>
+          <div className={style.postFullText}>{post.fullText}</div>
+          <div className={style.postFooter}>
+            <div className={style.postLikes}>
+              <FontAwesomeIcon
+                onClick={likePost}
+                className={cx(style.likeIcon, {
+                  [style.liked]: isLiked,
+                })}
+                icon={faHeart}
+              />
+              {likes}
+            </div>
+            {localStorage.id === post.postedBy ? (
+              <div className={style.postActions}>
+                <div
+                  onClick={() => setIsEditing(true)}
+                  className={cx(style.btnWrapper, style.editBtn)}
+                >
+                  <FontAwesomeIcon icon={faPen} />
+                  <button className={style.actionBtn}>Edit</button>
+                </div>
+                <div
+                  onClick={deletePost}
+                  className={cx(style.btnWrapper, style.deleteBtn)}
+                >
+                  <FontAwesomeIcon icon={faTrashAlt} />
+                  <button className={style.actionBtn}>Delete</button>
+                </div>
+              </div>
+            ) : null}
+          </div>
+        </>
+      )}
+      {/* <div className={style.postTitle}>{post.title}</div>
       <div className={style.postDescription}>{post.description}</div>
       <div className={style.postFullText}>{post.fullText}</div>
       <div className={style.postFooter}>
@@ -92,7 +200,12 @@ function PostDetails (props) {
           <div className={style.postActions}>
             <div className={cx(style.btnWrapper, style.editBtn)}>
               <FontAwesomeIcon icon={faPen} />
-              <button className={style.actionBtn}>Edit</button>
+              <button
+                onClick={() => setIsEditing(true)}
+                className={style.actionBtn}
+              >
+                Edit
+              </button>
             </div>
             <div className={cx(style.btnWrapper, style.deleteBtn)}>
               <FontAwesomeIcon icon={faTrashAlt} />
@@ -102,7 +215,7 @@ function PostDetails (props) {
             </div>
           </div>
         ) : null}
-      </div>
+      </div> */}
       <div className={style.commentForm}>
         <Formik
           initialValues={{
@@ -126,7 +239,6 @@ function PostDetails (props) {
                 name='text'
                 placeholder='Write a comment...'
               />
-
               <button type='submit' className={style.submitBtn}>
                 <FontAwesomeIcon icon={faPlay} />
               </button>
