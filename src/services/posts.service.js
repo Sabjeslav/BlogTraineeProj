@@ -46,3 +46,10 @@ export const getPostComments = async id => {
     url: `/comments/post/${id}`,
   });
 };
+
+export const deletePostComment = async id => {
+  return await axiosInstance({
+    method: 'delete',
+    url: `/comments/${id}`,
+  });
+};

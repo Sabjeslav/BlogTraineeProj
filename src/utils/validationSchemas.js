@@ -43,5 +43,8 @@ export const newPostSchema = Yup.object().shape({
 });
 
 export const newCommentSchema = Yup.object().shape({
-  
-})
+  text: Yup.string()
+    .min(3, 'Comment is too short!')
+    .max(512, 'Comment is too long!')
+    .required('Enter comment'),
+});

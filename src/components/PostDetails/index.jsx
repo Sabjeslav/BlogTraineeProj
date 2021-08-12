@@ -2,7 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useParams, useHistory } from 'react-router';
 import Spinner from '../Spinner';
-import { faHeart, faPen, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import {
+  faHeart,
+  faPen,
+  faTrashAlt,
+  faPlay,
+} from '@fortawesome/free-solid-svg-icons';
 import cx from 'classnames';
 
 import style from './PostDetails.module.sass';
@@ -14,7 +19,9 @@ import {
   getPostComments,
 } from '../../services/posts.service';
 import PostComment from './PostComment';
-import { Formik, Field, Form } from 'formik';
+import { newCommentSchema } from '../../utils/validationSchemas';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import axiosInstance from '../../services/axios.instance';
 
 function PostDetails (props) {
   const {
@@ -103,26 +110,55 @@ function PostDetails (props) {
       <div className={style.commentForm}>
         <Formik
           initialValues={{
-            comment: '',
+            text: '',
           }}
-          onSubmit={async values => {
-            await new Promise(r => setTimeout(r, 500));
-            alert(JSON.stringify(values, null, 2));
+          validationSchema={newCommentSchema}
+          onSubmit={async (values, actions) => {
+            await axiosInstance({
+              method: 'post',
+              url: `/comments/post/${id}`,
+              data: {
+                text: values.text,
+                followedCommentID: null,
+              },
+            })
+              .then(() => {
+                loadPostComments();
+                actions.resetForm();
+              })
+              .catch(err => console.error(err));
           }}
         >
-          <Form className={style.formWrapper}>
-            <Field
-              className={style.commentInput}
-              id='comment'
-              name='comment'
-              placeholder='Write a comment...'
+          <Form>
+            <div className={style.formWrapper}>
+              <Field
+                className={style.commentInput}
+                id='text'
+                name='text'
+                placeholder='Write a comment...'
+              />
+
+              <button type='submit' className={style.submitBtn}>
+                <FontAwesomeIcon icon={faPlay} />
+              </button>
+            </div>
+            <ErrorMessage
+              className={style.errorMsg}
+              component='div'
+              name='text'
             />
           </Form>
         </Formik>
       </div>
       <div className={style.commentsWrapper}>
         {comments.map(comment => {
-          return <PostComment key={comment._id} comment={comment} />;
+          return (
+            <PostComment
+              key={comment._id}
+              update={loadPostComments}
+              comment={comment}
+            />
+          );
         })}
       </div>
     </div>
