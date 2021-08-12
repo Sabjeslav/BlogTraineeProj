@@ -155,7 +155,7 @@ function PostDetails (props) {
           return (
             <PostComment
               key={comment._id}
-              update={loadPostComments}
+              updatePosts={loadPostComments}
               comment={comment}
             />
           );

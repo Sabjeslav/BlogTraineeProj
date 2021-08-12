@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
@@ -6,30 +7,53 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import style from './PostComment.module.sass';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import axiosInstance from '../../../services/axios.instance';
-import { deletePostComment } from '../../../services/posts.service';
+import {
+  deletePostComment,
+  likePostComment,
+} from '../../../services/posts.service';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import cx from 'classnames';
 
 function PostComment (props) {
   const {
     comment,
     users: { users },
     user: { user },
-    update
+    updatePosts,
   } = props;
+  const history = useHistory();
+  const [isLiked, setIsLiked] = useState(
+    comment.likes.includes(localStorage.id)
+  );
+  const [likes, setLikes] = useState(comment.likes.length);
   const [anchorEl, setAnchorEl] = useState(null);
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleClose = () => {
     setAnchorEl(null);
   };
   const deleteComment = async () => {
     handleClose();
     await deletePostComment(comment._id).then(res => {
-      update();
+      updatePosts();
       console.log(res);
     });
+  };
+  const likeComment = async () => {
+    if (localStorage.id !== user._id || !localStorage.id)
+      return history.push('/signIn');
+    if (isLiked) {
+      setLikes(likes - 1);
+    } else {
+      setLikes(likes + 1);
+    }
+    setIsLiked(!isLiked);
+    await likePostComment(comment._id)
+      .then(() => {
+        updatePosts();
+      })
+      .catch(err => console.error(err));
   };
   return (
     <div className={style.commentsWrapper}>
@@ -67,6 +91,16 @@ function PostComment (props) {
           ) : null}
         </div>
         <div className={style.commentText}>{comment.text}</div>
+        <div className={style.likes}>
+          <FontAwesomeIcon
+            onClick={likeComment}
+            className={cx(style.likeIcon, {
+              [style.liked]: isLiked,
+            })}
+            icon={faHeart}
+          />
+          {likes}
+        </div>
       </div>
     </div>
   );
