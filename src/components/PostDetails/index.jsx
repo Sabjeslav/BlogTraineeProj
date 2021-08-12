@@ -17,6 +17,7 @@ import {
   getPostById,
   likePostById,
   getPostComments,
+  addPostComment,
 } from '../../services/posts.service';
 import PostComment from './PostComment';
 import { newCommentSchema } from '../../utils/validationSchemas';
@@ -47,10 +48,7 @@ function PostDetails (props) {
   };
   const loadPostComments = async () => {
     await getPostComments(id)
-      .then(response => {
-        console.log(response);
-        setcomments(response);
-      })
+      .then(response => setcomments(response))
       .catch(err => console.error(err));
   };
   const deletePost = async () => {
@@ -67,9 +65,7 @@ function PostDetails (props) {
       setLikes(likes + 1);
     }
     setIsLiked(!isLiked);
-    await likePostById(id)
-      .then(() => {})
-      .catch(err => console.error(err));
+    await likePostById(id).catch(err => console.error(err));
   };
   useEffect(() => {
     getPostDetails();
@@ -114,14 +110,7 @@ function PostDetails (props) {
           }}
           validationSchema={newCommentSchema}
           onSubmit={async (values, actions) => {
-            await axiosInstance({
-              method: 'post',
-              url: `/comments/post/${id}`,
-              data: {
-                text: values.text,
-                followedCommentID: null,
-              },
-            })
+            await addPostComment(post._id, values.text)
               .then(() => {
                 loadPostComments();
                 actions.resetForm();
@@ -152,6 +141,7 @@ function PostDetails (props) {
       </div>
       <div className={style.commentsWrapper}>
         {comments.map(comment => {
+          if (comment.followedCommentID) return;
           return (
             <PostComment
               key={comment._id}

@@ -60,3 +60,24 @@ export const likePostComment = async id => {
     url: `/comments/like/${id}`,
   });
 };
+
+export const addPostComment = async (id, text) => {
+  return await axiosInstance({
+    method: 'post',
+    url: `/comments/post/${id}`,
+    data: {
+      text,
+      followedCommentID: null,
+    },
+  });
+};
+
+export const editPostComment = async (id, text) => {
+  return await axiosInstance({
+    method: 'patch',
+    url: `/comments/${id}`,
+    data: {
+      text,
+    },
+  });
+};
