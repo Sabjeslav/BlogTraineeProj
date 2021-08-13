@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import style from './UserProfile.module.sass';
-import { connect } from 'react-redux';
-import imgPlaceholder from '../../img/avatar-placeholder.png';
-import cx from 'classnames';
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import style from "./UserProfile.module.sass";
+import { connect } from "react-redux";
+import imgPlaceholder from "../../img/avatar-placeholder.png";
+import cx from "classnames";
 
-function UserProfile (props) {
+function UserProfile(props) {
   let { user, users } = props;
   const { id } = useParams();
   if (id) {
-    user = users.find(u => u._id === id);
+    user = users.find((u) => u._id === id);
   }
   const [isScaled, setIsScaled] = useState(false);
   const scaleImage = () => {
     setIsScaled(!isScaled);
   };
-  console.log(user);
   const imgLink = `https://nodejs-test-api-blog.herokuapp.com/${user.avatar}`;
+
   return (
     <div className={style.profileWrapper}>
       <div className={style.profileHeader}>Profile</div>
@@ -45,15 +45,16 @@ function UserProfile (props) {
               })}
               onClick={scaleImage}
               src={imgLink}
-              alt=''
+              onError={(e) => {
+                e.target.src = imgPlaceholder;
+              }}
             />
-            <img className={style.imgPlaceholder} src={imgPlaceholder} alt='' />
           </div>
         </div>
       </div>
     </div>
   );
 }
-const mapStateToProps = state => state.users;
+const mapStateToProps = (state) => state.users;
 
 export default connect(mapStateToProps)(UserProfile);
