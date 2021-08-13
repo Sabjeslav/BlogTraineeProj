@@ -1,16 +1,16 @@
-import axiosInstance from './axios.instance';
+import axiosInstance from "./axiosInstance";
 
 export const fetchPosts = async () => {
-  return await axiosInstance({
-    method: 'GET',
-    url: '/posts?limit=0',
+  return axiosInstance({
+    method: "GET",
+    url: "/posts?limit=0",
   });
 };
 
-export const createPost = async newPost => {
-  return await axiosInstance({
-    method: 'post',
-    url: '/posts',
+export const createPost = async (newPost) => {
+  return axiosInstance({
+    method: "post",
+    url: "/posts",
     data: {
       title: newPost.title,
       fullText: newPost.fullText,
@@ -20,8 +20,8 @@ export const createPost = async newPost => {
 };
 
 export const editPost = async (id, newPost) => {
-  return await axiosInstance({
-    method: 'patch',
+  return axiosInstance({
+    method: "patch",
     url: `/posts/${id}`,
     data: {
       title: newPost.title,
@@ -31,51 +31,51 @@ export const editPost = async (id, newPost) => {
   });
 };
 
-export const getPostById = async id => {
-  return await axiosInstance({
-    method: 'get',
+export const getPostById = async (id) => {
+  return axiosInstance({
+    method: "get",
     url: `/posts/${id}`,
   });
 };
 
-export const deletePostById = async id => {
-  return await axiosInstance({
-    method: 'delete',
+export const deletePostById = async (id) => {
+  return axiosInstance({
+    method: "delete",
     url: `/posts/${id}`,
   });
 };
 
-export const likePostById = async id => {
-  return await axiosInstance({
-    method: 'put',
+export const likePostById = async (id) => {
+  return axiosInstance({
+    method: "put",
     url: `/posts/like/${id}`,
   });
 };
 
-export const getPostComments = async id => {
-  return await axiosInstance({
-    method: 'get',
+export const getPostComments = async (id) => {
+  return axiosInstance({
+    method: "get",
     url: `/comments/post/${id}`,
   });
 };
 
-export const deletePostComment = async id => {
-  return await axiosInstance({
-    method: 'delete',
+export const deletePostComment = async (id) => {
+  return axiosInstance({
+    method: "delete",
     url: `/comments/${id}`,
   });
 };
 
-export const likePostComment = async id => {
-  return await axiosInstance({
-    method: 'put',
+export const likePostComment = async (id) => {
+  return axiosInstance({
+    method: "put",
     url: `/comments/like/${id}`,
   });
 };
 
 export const addPostComment = async (id, text) => {
-  return await axiosInstance({
-    method: 'post',
+  return axiosInstance({
+    method: "post",
     url: `/comments/post/${id}`,
     data: {
       text,
@@ -85,8 +85,8 @@ export const addPostComment = async (id, text) => {
 };
 
 export const editPostComment = async (id, text) => {
-  return await axiosInstance({
-    method: 'patch',
+  return axiosInstance({
+    method: "patch",
     url: `/comments/${id}`,
     data: {
       text,

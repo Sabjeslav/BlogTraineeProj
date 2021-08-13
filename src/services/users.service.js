@@ -1,14 +1,14 @@
-import axiosInstance from './axios.instance';
+import axiosInstance from './axiosInstance';
 
 export const fetchUsers = async () => {
-  return await axiosInstance({
+  return axiosInstance({
     method: 'get',
     url: '/users?limit=0',
   });
 };
 
 export const signUp = async user => {
-  return await axiosInstance({
+  return axiosInstance({
     method: 'post',
     url: '/users',
     data: {

@@ -1,7 +1,7 @@
-import axiosInstance from './axios.instance';
+import axiosInstance from './axiosInstance';
 
 export const authUser = async user => {
-  return await axiosInstance({
+  return axiosInstance({
     method: 'post',
     url: '/auth',
     data: {
@@ -12,14 +12,14 @@ export const authUser = async user => {
 };
 
 export const fetchCurrentUser = async () => {
-  return await axiosInstance({
+  return axiosInstance({
     method: 'get',
     url: '/auth/user',
   });
 };
 
 export const deleteCurrentUserAcc = async id => {
-  return await axiosInstance({
+  return axiosInstance({
     method: 'delete',
     url: `/users/${id}`,
   });
