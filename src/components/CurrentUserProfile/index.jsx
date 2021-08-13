@@ -41,8 +41,9 @@ function CurrentUserProfile (props) {
   useEffect(() => {
     getUser();
   }, []);
+  
   return (
-    <div className={style.profileWrapper}>
+    <div className={style.profileOuterWrapper}>
       <UserProfile user={user} />
       <div className={cx(style.profileRow, style.buttonRow)}>
         <button className={style.profileBtn} onClick={showPosts}>
