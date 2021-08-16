@@ -1,21 +1,21 @@
-import React from 'react';
-import './spinner.css'
+import React from "react";
+import "./spinner.css";
 
-function Spinner () {
+function Spinner() {
   return (
-    <div className='lds-spinner'>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+    <div className="lds-spinner">
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
     </div>
   );
 }

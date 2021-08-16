@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import style from "./UserProfile.module.sass";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import imgPlaceholder from "../../img/avatar-placeholder.png";
 import cx from "classnames";
 
-function UserProfile(props) {
-  let { user, users } = props;
+function Profile(props) {
+  let { user } = useSelector(({ user }) => user);
+  let { users } = props;
+  console.log(props);
   const { id } = useParams();
   if (id) {
     user = users.find((u) => u._id === id);
@@ -44,6 +46,7 @@ function UserProfile(props) {
                 [style.scaled]: isScaled,
               })}
               onClick={scaleImage}
+              alt=""
               src={imgLink}
               onError={(e) => {
                 e.target.src = imgPlaceholder;
@@ -55,6 +58,7 @@ function UserProfile(props) {
     </div>
   );
 }
+
 const mapStateToProps = (state) => state.users;
 
-export default connect(mapStateToProps)(UserProfile);
+export default connect(mapStateToProps)(Profile);

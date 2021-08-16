@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom';
-import React from 'react';
-import style from './Post.module.sass';
+import { Link } from "react-router-dom";
+import React from "react";
+import style from "./Post.module.sass";
 
-function Post ({ post }) {
+export default function Post({ post }) {
   return (
     <div className={style.postWrapper}>
       <div className={style.postTitle}>{post.title}</div>
@@ -13,5 +13,3 @@ function Post ({ post }) {
     </div>
   );
 }
-
-export default Post;

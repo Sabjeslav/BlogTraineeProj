@@ -22,7 +22,7 @@ function LoginForm () {
             password: values.password,
             name: values.name,
           })
-            .then(res => {
+            .then(() => {
               history.push('/signIn');
             })
             .catch(err => {

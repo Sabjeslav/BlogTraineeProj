@@ -1,28 +1,25 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router';
-import { connect } from 'react-redux';
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisV, faHeart } from '@fortawesome/free-solid-svg-icons';
-import style from './PostComment.module.sass';
-import { Form, Formik, Field, ErrorMessage } from 'formik';
+import React, { useState } from "react";
+import { useHistory } from "react-router";
+import { useSelector } from "react-redux";
+import Button from "@material-ui/core/Button";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEllipsisV, faHeart } from "@fortawesome/free-solid-svg-icons";
+import style from "./PostComment.module.sass";
+import { Form, Formik, Field, ErrorMessage } from "formik";
 import {
   deletePostComment,
   editPostComment,
   likePostComment,
-} from '../../../services/posts.service';
-import cx from 'classnames';
-import { newCommentSchema } from '../../../utils/validationSchemas';
+} from "../../../services/posts.service";
+import cx from "classnames";
+import { newCommentSchema } from "../../../utils/validationSchemas";
 
-function PostComment (props) {
-  const {
-    comment,
-    users: { users },
-    user: { user },
-    updatePosts,
-  } = props;
+export default function PostComment(props) {
+  const { users } = useSelector(({ users }) => users);
+  const { user } = useSelector(({ user }) => user);
+  const { comment, updatePosts } = props;
   const history = useHistory();
   const [isLiked, setIsLiked] = useState(
     comment.likes.includes(localStorage.id)
@@ -30,7 +27,7 @@ function PostComment (props) {
   const [isEditing, setIsEditing] = useState(false);
   const [likes, setLikes] = useState(comment.likes.length);
   const [anchorEl, setAnchorEl] = useState(null);
-  const handleClick = event => {
+  const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -38,7 +35,7 @@ function PostComment (props) {
   };
   const deleteComment = async () => {
     handleClose();
-    await deletePostComment(comment._id).then(res => {
+    await deletePostComment(comment._id).then((res) => {
       updatePosts();
     });
   };
@@ -48,7 +45,7 @@ function PostComment (props) {
   };
   const likeComment = async () => {
     if (localStorage.id !== user._id || !localStorage.id)
-      return history.push('/signIn');
+      return history.push("/signIn");
     if (isLiked) {
       setLikes(likes - 1);
     } else {
@@ -59,14 +56,14 @@ function PostComment (props) {
       .then(() => {
         updatePosts();
       })
-      .catch(err => console.error(err));
+      .catch((err) => console.error(err));
   };
   return (
     <div className={style.commentsWrapper}>
       <div key={comment._id} className={style.postComment}>
         <div className={style.commentHeader}>
           <div className={style.authorName}>
-            {users.map(user => {
+            {users.map((user) => {
               if (user._id === comment.commentedBy) {
                 return <span key={comment._id}>{user.name}</span>;
               }
@@ -78,14 +75,14 @@ function PostComment (props) {
             <>
               <Button
                 className={style.menuBtn}
-                aria-controls='simple-menu'
-                aria-haspopup='true'
+                aria-controls="simple-menu"
+                aria-haspopup="true"
                 onClick={handleClick}
               >
                 <FontAwesomeIcon icon={faEllipsisV} />
               </Button>
               <Menu
-                id='simple-menu'
+                id="simple-menu"
                 anchorEl={anchorEl}
                 keepMounted
                 open={Boolean(anchorEl)}
@@ -110,23 +107,23 @@ function PostComment (props) {
                   setIsEditing(false);
                   actions.resetForm();
                 })
-                .catch(err => console.error(err));
+                .catch((err) => console.error(err));
             }}
           >
             <Form>
               <div className={style.formWrapper}>
                 <Field
                   className={style.commentInput}
-                  id='text'
-                  name='text'
-                  placeholder='Write a comment...'
+                  id="text"
+                  name="text"
+                  placeholder="Write a comment..."
                 />
               </div>
-              <button type='submit' className={style.submitBtn}>
+              <button type="submit" className={style.submitBtn}>
                 OK
               </button>
               <button
-                type='button'
+                type="button"
                 onClick={() => {
                   setIsEditing(false);
                 }}
@@ -136,8 +133,8 @@ function PostComment (props) {
               </button>
               <ErrorMessage
                 className={style.errorMsg}
-                component='div'
-                name='text'
+                component="div"
+                name="text"
               />
             </Form>
           </Formik>
@@ -160,7 +157,3 @@ function PostComment (props) {
     </div>
   );
 }
-
-const mapStateToProps = state => state;
-
-export default connect(mapStateToProps)(PostComment);

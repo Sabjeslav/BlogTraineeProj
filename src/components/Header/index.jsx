@@ -1,10 +1,9 @@
-import React from 'react';
-import style from './Header.module.sass';
-import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React from "react";
+import style from "./Header.module.sass";
+import { NavLink } from "react-router-dom";
 
-function Header (props) {
-  const { isLogged } = props;
+export default function Header() {
+  const isLogged = localStorage.token;
   return (
     <div className={style.headerWrapper}>
       <div className={style.headerBody}>
@@ -12,14 +11,14 @@ function Header (props) {
           <NavLink
             className={style.link}
             activeClassName={style.activeLink}
-            to='/users'
+            to="/users"
           >
             <div>Users</div>
           </NavLink>
           <NavLink
             className={style.link}
             activeClassName={style.activeLink}
-            to='/posts'
+            to="/posts"
           >
             <div>Posts</div>
           </NavLink>
@@ -27,7 +26,7 @@ function Header (props) {
             <NavLink
               className={style.link}
               activeClassName={style.activeLink}
-              to='/signUp'
+              to="/signUp"
             >
               <div>Sign up</div>
             </NavLink>
@@ -36,7 +35,7 @@ function Header (props) {
             <NavLink
               className={style.link}
               activeClassName={style.activeLink}
-              to='/newPost'
+              to="/newPost"
             >
               <div>New post</div>
             </NavLink>
@@ -44,11 +43,11 @@ function Header (props) {
         </div>
         <div className={style.profileWrapper}>
           {isLogged ? (
-            <NavLink className={style.profileLink} to='/profile'>
+            <NavLink className={style.profileLink} to="/profile">
               <div>Profile</div>
             </NavLink>
           ) : (
-            <NavLink className={style.profileLink} to='/signIn'>
+            <NavLink className={style.profileLink} to="/signIn">
               <div>Sign In</div>
             </NavLink>
           )}
@@ -57,7 +56,3 @@ function Header (props) {
     </div>
   );
 }
-
-const mapStateToProps = state => state.user;
-
-export default connect(mapStateToProps)(Header);

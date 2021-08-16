@@ -1,50 +1,50 @@
-import React, { useEffect } from 'react';
-import style from './Profile.module.sass';
-import { useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { POSTS_ACTION_TYPES, USER_ACTION_TYPES } from '../../actions/actions';
-import cx from 'classnames';
-import UserProfile from '../UserProfile';
+import React, { useEffect } from "react";
+import style from "./CurrentUserProfilePage.module.sass";
+import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import { POSTS_ACTION_TYPES, USER_ACTION_TYPES } from "../../actions/actions";
+import cx from "classnames";
+import Profile from "../../components/Profile";
 import {
   fetchCurrentUser,
   deleteCurrentUserAcc,
-} from '../../services/currentUser.service';
+} from "../../services/currentUser.service";
 
-function CurrentUserProfile (props) {
+function CurrentUserProfilePage(props) {
   const { toggleLogout, postUser, user } = props;
   const history = useHistory();
   const logOut = () => {
     localStorage.clear();
     toggleLogout();
-    history.push('/signIn');
+    history.push("/signIn");
   };
   const getUser = async () => {
     await fetchCurrentUser()
-      .then(res => {
+      .then((res) => {
         postUser(res);
-        localStorage.setItem('id', res._id);
+        localStorage.setItem("id", res._id);
       })
 
-      .catch(err => console.error(err));
+      .catch((err) => console.error(err));
   };
   const deleteAccount = async () => {
     await deleteCurrentUserAcc(user._id)
       .then(() => {
         localStorage.clear();
-        history.push('/signIn');
+        history.push("/signIn");
       })
-      .catch(err => console.error(err));
+      .catch((err) => console.error(err));
   };
   const showPosts = () => {
-    history.push('/userposts');
+    history.push("/userposts");
   };
   useEffect(() => {
     getUser();
   }, []);
-  
+
   return (
     <div className={style.profileOuterWrapper}>
-      <UserProfile user={user} />
+      <Profile user={user} />
       <div className={cx(style.profileRow, style.buttonRow)}>
         <button className={style.profileBtn} onClick={showPosts}>
           Your posts
@@ -67,15 +67,15 @@ function CurrentUserProfile (props) {
   );
 }
 
-const mapStateToProps = state => state.user;
+const mapStateToProps = (state) => state.user;
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    postUser: newUser =>
+    postUser: (newUser) =>
       dispatch({ type: USER_ACTION_TYPES.POST_USER, newUser }),
     toggleLogout: () => dispatch({ type: USER_ACTION_TYPES.TOGGLE_LOGOUT }),
     getPosts: () => dispatch({ type: POSTS_ACTION_TYPES.GET_POSTS }),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CurrentUserProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(CurrentUserProfilePage);

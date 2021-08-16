@@ -1,8 +1,6 @@
-import React from 'react';
-import style from './PageContainer.module.sass';
+import React from "react";
+import style from "./PageContainer.module.sass";
 
-function PageContainer (props) {
-  return <div className={style.main}>{props.children}</div>;
+export default function PageWrapper({ children }) {
+  return <div className={style.main}>{children}</div>;
 }
-
-export default PageContainer;
