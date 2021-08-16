@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 
-import SignUpForm from "./components/SignUpForm";
+import SignUpPage from "./pages/SignUpPage";
 import Header from "./components/Header";
-import PageWrapper from "./components/PageContainer";
+import PageWrapper from "./components/PageWrapper";
 import PostCreation from "./components/PostCreation";
 import CurrentUserProfilePage from "./pages/CurrentUserProfilePage";
 import UsersPage from "./pages/UsersPage";
@@ -17,15 +17,15 @@ import UserPostsPage from "./pages/UserPostsPage";
 import PostDetails from "./components/PostDetails";
 
 import {
-  USERS_ACTION_TYPES,
   POSTS_ACTION_TYPES,
   USER_ACTION_TYPES,
-} from "./actions/actions";
+  USERS_ACTION_TYPES,
+} from "./redux/actions/actions";
 
 import "./App.sass";
 
 import { fetchPosts } from "./services/posts.service";
-import { fetchUsers } from "./services/users.service";
+import { fetchUsers } from "./services/usersService";
 import { fetchCurrentUser } from "./services/currentUser.service";
 
 function App(props) {
@@ -58,7 +58,7 @@ function App(props) {
       .catch((err) => console.error(err));
   };
   useEffect(() => {
-    getCurrentUser();
+    if (localStorage.token) getCurrentUser();
     getUsers();
     getPosts();
   }, []);
@@ -71,7 +71,7 @@ function App(props) {
             <Route exact path="/">
               <Redirect to="/users" component={UsersPage} />
             </Route>
-            <Route path="/signUp" component={SignUpForm} />
+            <Route path="/signUp" component={SignUpPage} />
             <Route exact path="/users" component={UsersPage} />
             <Route exact path="/users/:id" component={UserProfile} />
             <ProtectedRoute path="/newPost" component={PostCreation} />

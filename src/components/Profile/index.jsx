@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import style from "./UserProfile.module.sass";
 import { connect, useSelector } from "react-redux";
@@ -12,12 +12,7 @@ function Profile(props) {
   if (id) {
     user = users.find((u) => u._id === id);
   }
-  const [isScaled, setIsScaled] = useState(false);
-  const scaleImage = () => {
-    setIsScaled(!isScaled);
-  };
   const imgLink = `https://nodejs-test-api-blog.herokuapp.com${user.avatar}`;
-
   return (
     <div className={style.profileWrapper}>
       <div className={style.profileHeader}>Profile</div>
@@ -41,10 +36,7 @@ function Profile(props) {
         <div className={style.profileData}>
           <div className={style.imgContainer}>
             <img
-              className={cx(style.profileImg, {
-                [style.scaled]: isScaled,
-              })}
-              onClick={scaleImage}
+              className={cx(style.profileImg)}
               alt=""
               src={imgLink}
               onError={(e) => {

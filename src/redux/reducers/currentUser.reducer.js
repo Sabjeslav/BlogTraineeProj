@@ -1,8 +1,9 @@
-import { USER_ACTION_TYPES } from '../actions/actions';
+import { USER_ACTION_TYPES } from "../actions/actions";
 
 const userInitialState = {
-  isLogged: localStorage.getItem('isLogged') || false,
+  isLogged: localStorage.getItem("isLogged") || false,
   user: {},
+  error: {},
 };
 
 function currentUserReducer (state = userInitialState, action) {

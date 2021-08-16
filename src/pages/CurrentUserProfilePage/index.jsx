@@ -2,12 +2,15 @@ import React, { useEffect } from "react";
 import style from "./CurrentUserProfilePage.module.sass";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import { POSTS_ACTION_TYPES, USER_ACTION_TYPES } from "../../actions/actions";
+import {
+  POSTS_ACTION_TYPES,
+  USER_ACTION_TYPES,
+} from "../../redux/actions/actions";
 import cx from "classnames";
 import Profile from "../../components/Profile";
 import {
-  fetchCurrentUser,
   deleteCurrentUserAcc,
+  fetchCurrentUser,
 } from "../../services/currentUser.service";
 
 function CurrentUserProfilePage(props) {

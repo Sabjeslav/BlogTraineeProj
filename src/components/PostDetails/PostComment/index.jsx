@@ -7,7 +7,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisV, faHeart } from "@fortawesome/free-solid-svg-icons";
 import style from "./PostComment.module.sass";
-import { Form, Formik, Field, ErrorMessage } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import {
   deletePostComment,
   editPostComment,
@@ -67,7 +67,7 @@ export default function PostComment(props) {
               if (user._id === comment.commentedBy) {
                 return <span key={comment._id}>{user.name}</span>;
               }
-              return;
+              return null;
             })}
           </div>
           <div>{new Date(comment.dateCreated).toLocaleDateString()}</div>

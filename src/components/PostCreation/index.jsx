@@ -1,80 +1,74 @@
-import React from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
-import { newPostSchema } from '../../utils/validationSchemas';
-import style from './PostCreation.module.sass';
-import { createPost } from '../../services/posts.service';
-const cx = require('classnames');
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import { newPostSchema } from "../../utils/validationSchemas";
+import style from "./PostCreation.module.sass";
+import { addNewPost } from "../../helpers";
 
-function PostCreation () {
+const cx = require("classnames");
+
+function PostCreation() {
+  const [errorMessage, setErrorMessage] = useState(null);
+  const history = useHistory();
   return (
     <div className={style.wrapper}>
       <h1>New post</h1>
       <Formik
         initialValues={{
-          title: '',
-          fullText: '',
-          description: '',
+          title: "",
+          fullText: "",
+          description: "",
         }}
         validationSchema={newPostSchema}
         onSubmit={async (values, actions) => {
-          await createPost({
-            title: values.title,
-            fullText: values.fullText,
-            description: values.description,
-          })
-            .then(res => {
-              console.log(res.data);
-              actions.resetForm();
-            })
-            .catch(err => {
-              console.error(err);
-            });
+          await addNewPost(values, history, setErrorMessage);
         }}
       >
         <Form className={style.formWrapper}>
           <div className={style.formSection}>
             <Field
               className={style.inputField}
-              name='title'
-              placeholder='Title'
+              name="title"
+              placeholder="Title"
             />
             <ErrorMessage
-              component='div'
+              component="div"
               className={style.errorMsg}
-              name='title'
+              name="title"
             />
           </div>
 
           <div className={style.formSection}>
-            <label htmlFor='fullText'>Full text</label>
+            <label htmlFor="fullText">Full text</label>
             <Field
               className={cx(style.inputField, style.inputArea)}
-              name='fullText'
-              as='textarea'
-              placeholder='Full text'
-              type='text'
+              name="fullText"
+              as="textarea"
+              placeholder="Full text"
+              type="text"
             />
             <ErrorMessage
-              component='div'
+              component="div"
               className={style.errorMsg}
-              name='fullText'
+              name="fullText"
             />
           </div>
 
           <div className={style.formSection}>
             <Field
               className={style.inputField}
-              name='description'
-              placeholder='Description'
-              type='text'
+              name="description"
+              placeholder="Description"
+              type="text"
             />
             <ErrorMessage
-              component='div'
+              component="div"
               className={style.errorMsg}
-              name='description'
+              name="description"
             />
           </div>
-          <button className={style.submitBtn} type='submit'>
+          <div className={style.errorMsg}>{errorMessage}</div>
+          <button className={style.submitBtn} type="submit">
             Post
           </button>
         </Form>

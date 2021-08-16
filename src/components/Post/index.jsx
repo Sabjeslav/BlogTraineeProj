@@ -8,26 +8,35 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
-
 export default function Post({ post }) {
   return (
     <Card className={style.postWrapper}>
       <CardActionArea>
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2" className={style.postText}>
+          <Typography
+            gutterBottom
+            variant="h5"
+            component="h2"
+            className={style.postText}
+          >
             {post.title}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p" className={style.postText}>
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            component="p"
+            className={style.postText}
+          >
             {post.description}
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
-          <Link className={style.detailsBtn} to={`/posts/${post._id}`}>
+        <Link className={style.detailsBtn} to={`/posts/${post._id}`}>
+          <Button size="small" color="primary">
             View details
-          </Link>
-        </Button>
+          </Button>
+        </Link>
       </CardActions>
     </Card>
   );

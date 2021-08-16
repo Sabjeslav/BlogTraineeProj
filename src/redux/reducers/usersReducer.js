@@ -1,4 +1,4 @@
-import { USERS_ACTION_TYPES } from '../actions/actions';
+import { USERS_ACTION_TYPES } from "../actions/actions";
 
 const usersInitialState = {
   users: [],

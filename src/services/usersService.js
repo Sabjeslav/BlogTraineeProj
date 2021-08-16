@@ -1,16 +1,16 @@
-import axiosInstance from './axiosInstance';
+import axiosInstance from "./axiosInstance";
 
 export const fetchUsers = async () => {
   return axiosInstance({
-    method: 'get',
-    url: '/users?limit=0',
+    method: "get",
+    url: "/users?limit=0",
   });
 };
 
-export const signUp = async user => {
+export const createUser = async (user) => {
   return axiosInstance({
-    method: 'post',
-    url: '/users',
+    method: "post",
+    url: "/users",
     data: {
       email: user.email,
       password: user.password,
