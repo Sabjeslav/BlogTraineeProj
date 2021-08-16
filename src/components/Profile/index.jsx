@@ -8,7 +8,6 @@ import cx from "classnames";
 function Profile(props) {
   let { user } = useSelector(({ user }) => user);
   let { users } = props;
-  console.log(props);
   const { id } = useParams();
   if (id) {
     user = users.find((u) => u._id === id);
@@ -17,7 +16,7 @@ function Profile(props) {
   const scaleImage = () => {
     setIsScaled(!isScaled);
   };
-  const imgLink = `https://nodejs-test-api-blog.herokuapp.com/${user.avatar}`;
+  const imgLink = `https://nodejs-test-api-blog.herokuapp.com${user.avatar}`;
 
   return (
     <div className={style.profileWrapper}>
