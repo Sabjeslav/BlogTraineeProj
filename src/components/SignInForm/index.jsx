@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { loginSchema } from "../../utils/validationSchemas";
@@ -11,6 +11,7 @@ import { authUser } from "../../services/currentUser.service";
 export default function SignInForm() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const [errorMessage, setErrorMessage] = useState(null);
   return (
     <div className={style.wrapper}>
       <h1>Sign in</h1>
@@ -28,17 +29,20 @@ export default function SignInForm() {
             })
               .then((res) => {
                 localStorage.setItem("token", res.token);
-                localStorage.setItem("isLogged", true);
                 dispatch({ type: USER_ACTION_TYPES.TOGGLE_LOGIN });
                 history.push("/profile");
               })
-              .catch((err) => {
-                console.error(err);
+              .catch((res) => {
+                setErrorMessage(res);
+                console.error("error", res);
               });
             actions.resetForm();
           }}
         >
-          <Form className={style.formWrapper}>
+          <Form
+            className={style.formWrapper}
+            onChange={() => setErrorMessage(null)}
+          >
             <div className={style.formSection}>
               <Field
                 className={style.inputField}
@@ -65,6 +69,8 @@ export default function SignInForm() {
                 name="password"
               />
             </div>
+
+            <div className={style.errorMsg}>{errorMessage}</div>
 
             <div className={style.signUpLink}>
               <Link to="/signUp">Don't have an account? Let's create it</Link>
