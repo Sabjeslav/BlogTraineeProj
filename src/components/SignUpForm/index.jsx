@@ -3,10 +3,12 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { newUserSchema } from "../../utils/validationSchemas";
 import style from "./Form.module.sass";
 import { useHistory } from "react-router-dom";
-import { signUp } from "../../helpers";
+import { useDispatch } from "react-redux";
+import { addNewUser } from "../../redux/Users/usersActions";
 
 export default function SignUpForm() {
   const history = useHistory();
+  const dispatch = useDispatch();
   const [errorMsg, setErrorMsg] = useState(null);
   return (
     <div className={style.formContainer}>
@@ -18,7 +20,8 @@ export default function SignUpForm() {
         }}
         validationSchema={newUserSchema}
         onSubmit={async (values, actions) => {
-          await signUp(values, history, setErrorMsg);
+          console.log("values", values);
+          dispatch(addNewUser(values, history));
           actions.resetForm();
         }}
       >

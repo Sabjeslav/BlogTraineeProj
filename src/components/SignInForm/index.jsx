@@ -4,9 +4,11 @@ import { loginSchema } from "../../utils/validationSchemas";
 import style from "./SignInForm.module.sass";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
-import { signIn } from "../../helpers";
+import { useDispatch } from "react-redux";
+import { logIn } from "../../redux/CurrentUser/currentUserActions";
 
 export default function SignInForm() {
+  const dispatch = useDispatch();
   const history = useHistory();
   const [errorMessage, setErrorMessage] = useState(null);
   return (
@@ -20,7 +22,7 @@ export default function SignInForm() {
           }}
           validationSchema={loginSchema}
           onSubmit={async (values, actions) => {
-            await signIn(values, history, setErrorMessage);
+            dispatch(logIn(values, history));
             actions.resetForm();
           }}
         >

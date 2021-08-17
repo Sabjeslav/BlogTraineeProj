@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import style from "./Header.module.sass";
 import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUsers } from "../../redux/Users/usersActions";
+import { getAllPosts } from "../../redux/Posts/postsActions";
+import { getCurrentUser } from "../../redux/CurrentUser/currentUserActions";
 
 export default function Header() {
-  const isLogged = localStorage.token;
+  const isLogged = useSelector((state) => state.user.isLogged);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllUsers());
+    dispatch(getAllPosts());
+    if (localStorage.token) dispatch(getCurrentUser());
+  }, [dispatch]);
   return (
     <div className={style.headerWrapper}>
       <div className={style.headerBody}>

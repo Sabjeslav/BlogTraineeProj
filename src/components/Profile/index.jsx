@@ -1,13 +1,13 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import style from "./UserProfile.module.sass";
-import { connect, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import imgPlaceholder from "../../img/avatar-placeholder.png";
 import cx from "classnames";
 
-function Profile(props) {
+function Profile() {
   let { user } = useSelector(({ user }) => user);
-  let { users } = props;
+  const users = useSelector((state) => state.users.users);
   const { id } = useParams();
   if (id) {
     user = users.find((u) => u._id === id);
@@ -50,6 +50,4 @@ function Profile(props) {
   );
 }
 
-const mapStateToProps = (state) => state.users;
-
-export default connect(mapStateToProps)(Profile);
+export default Profile;
