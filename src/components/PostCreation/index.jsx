@@ -3,13 +3,15 @@ import { useHistory } from "react-router-dom";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { newPostSchema } from "../../utils/validationSchemas";
 import style from "./PostCreation.module.sass";
-import { addNewPost } from "../../helpers";
+import { useDispatch } from "react-redux";
+import { addNewPost } from "../../redux/Posts/postsActions";
 
 const cx = require("classnames");
 
 function PostCreation() {
   const [errorMessage, setErrorMessage] = useState(null);
   const history = useHistory();
+  const dispatch = useDispatch();
   return (
     <div className={style.wrapper}>
       <h1>New post</h1>
@@ -21,7 +23,8 @@ function PostCreation() {
         }}
         validationSchema={newPostSchema}
         onSubmit={async (values, actions) => {
-          await addNewPost(values, history, setErrorMessage);
+          dispatch(addNewPost(values));
+          actions.resetForm();
         }}
       >
         <Form className={style.formWrapper}>

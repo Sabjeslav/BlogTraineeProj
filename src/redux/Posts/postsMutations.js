@@ -1,4 +1,5 @@
 import {
+  ADD_NEW_POST,
   DISABLE_POSTS_IS_FETCHING,
   ENABLE_POSTS_IS_FETCHING,
   GET_ALL_POSTS,
@@ -20,5 +21,12 @@ export const enablePostsIsFetching = () => {
 export const disablePostsIsFetching = () => {
   return {
     type: DISABLE_POSTS_IS_FETCHING,
+  };
+};
+
+export const addNewPostMutation = (data) => {
+  return {
+    type: ADD_NEW_POST,
+    data,
   };
 };

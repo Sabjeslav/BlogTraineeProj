@@ -12,7 +12,7 @@ import {
   deletePostComment,
   editPostComment,
   likePostComment,
-} from "../../../services/posts.service";
+} from "../../../services/postsService";
 import cx from "classnames";
 import { newCommentSchema } from "../../../utils/validationSchemas";
 

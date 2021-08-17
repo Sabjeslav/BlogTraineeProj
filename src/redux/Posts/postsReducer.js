@@ -1,4 +1,5 @@
 import {
+  ADD_NEW_POST,
   DISABLE_POSTS_IS_FETCHING,
   ENABLE_POSTS_IS_FETCHING,
   GET_ALL_POSTS,
@@ -21,6 +22,9 @@ function postsReducer(state = postsInitialState, action) {
     case ENABLE_POSTS_IS_FETCHING: {
       if (state.loaded) return state;
       return { ...state, isFetching: true };
+    }
+    case ADD_NEW_POST: {
+      return { ...state, posts: [...state.posts, action.data] };
     }
     case DISABLE_POSTS_IS_FETCHING: {
       return { ...state, isFetching: false, loaded: true };

@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams, useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import cx from "classnames";
 import {
   faHeart,
   faPen,
-  faTrashAlt,
   faPlay,
+  faTrashAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
-  deletePostById,
-  getPostById,
-  likePostById,
-  getPostComments,
   addPostComment,
+  deletePostById,
   editPost,
-} from "../../services/posts.service";
+  getPostById,
+  getPostComments,
+  likePostById,
+} from "../../services/postsService";
 
 import Spinner from "../Spinner";
 import PostComment from "./PostComment";
