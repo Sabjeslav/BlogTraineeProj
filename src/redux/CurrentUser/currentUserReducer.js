@@ -4,6 +4,7 @@ import {
   SET_USER_ERROR,
   TOGGLE_LOGIN,
   TOGGLE_LOGOUT,
+  UPDATE_USER,
 } from "./currentUserTypes";
 
 const userInitialState = {
@@ -18,6 +19,9 @@ function currentUserReducer(state = userInitialState, action) {
       return { ...state };
     case GET_CURRENT_USER: {
       return { ...state, user: action.data };
+    }
+    case UPDATE_USER: {
+      return { ...state, user: { ...state.user, ...action.data } };
     }
     case TOGGLE_LOGIN: {
       return { ...state, isLogged: true };

@@ -3,6 +3,7 @@ import {
   SET_USER_ERROR,
   TOGGLE_LOGIN,
   TOGGLE_LOGOUT,
+  UPDATE_USER,
 } from "./currentUserTypes";
 
 export const getCurrentUserMutation = (data) => {
@@ -28,5 +29,12 @@ export const setErrorMutation = (error) => {
   return {
     type: SET_USER_ERROR,
     error,
+  };
+};
+
+export const updateUserMutation = (data) => {
+  return {
+    type: UPDATE_USER,
+    data,
   };
 };

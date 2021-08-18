@@ -4,9 +4,9 @@ import {
   enablePostsIsFetching,
   getAllPostsMutation,
   setPostErrorMutation,
-  toggleSnackbarMutation,
 } from "./postsMutations";
 import { createPost, fetchPosts } from "../../services/postsService";
+import { toggleSnackbar } from "../Snackbar/snackbarActions";
 
 export const getAllPosts = () => {
   return (dispatch) => {
@@ -42,11 +42,5 @@ export const addNewPost = (data, history) => {
 export const setPostError = (error) => {
   return (dispatch) => {
     dispatch(setPostErrorMutation(error));
-  };
-};
-
-export const toggleSnackbar = () => {
-  return (dispatch) => {
-    dispatch(toggleSnackbarMutation());
   };
 };

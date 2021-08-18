@@ -4,7 +4,6 @@ import {
   ENABLE_POSTS_IS_FETCHING,
   GET_ALL_POSTS,
   SET_POST_ERROR,
-  TOGGLE_SNACKBAR,
 } from "./postsTypes";
 
 export const getAllPostsMutation = (data) => {
@@ -37,11 +36,5 @@ export const setPostErrorMutation = (error) => {
   return {
     type: SET_POST_ERROR,
     error,
-  };
-};
-
-export const toggleSnackbarMutation = () => {
-  return {
-    type: TOGGLE_SNACKBAR,
   };
 };

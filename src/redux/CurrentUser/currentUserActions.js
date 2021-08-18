@@ -3,12 +3,14 @@ import {
   logInMutation,
   logOutMutation,
   setErrorMutation,
+  updateUserMutation,
 } from "./currentUserMutations";
 import {
   authUser,
   deleteCurrentUserAcc,
   fetchCurrentUser,
-} from "../../services/currentUser.service";
+  updateCurrentUser,
+} from "../../services/currentUserService";
 import { deleteUserMutation } from "../Users/usersMutations";
 
 export const getCurrentUser = () => {
@@ -58,5 +60,13 @@ export const logIn = (data, history) => {
 export const setError = (error) => {
   return (dispatch) => {
     dispatch(setErrorMutation(error));
+  };
+};
+
+export const updateUser = (id, data) => {
+  return (dispatch) => {
+    updateCurrentUser(id, data).then((res) => {
+      dispatch(updateUserMutation(res));
+    });
   };
 };

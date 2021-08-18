@@ -3,7 +3,7 @@ import style from "./PageContainer.module.sass";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleSnackbar } from "../../redux/Posts/postsActions";
+import { toggleSnackbar } from "../../redux/Snackbar/snackbarActions";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -11,18 +11,22 @@ function Alert(props) {
 
 export default function PageWrapper({ children }) {
   const dispatch = useDispatch();
-  const open = useSelector((state) => state.posts.snackbar);
+  const snackbar = useSelector((state) => state.snackbar);
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
-    dispatch(toggleSnackbar());
+    dispatch(toggleSnackbar("Post added successfully"));
   };
   return (
     <div className={style.main}>
-      <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
+      <Snackbar
+        open={snackbar.isOpened}
+        autoHideDuration={4000}
+        onClose={handleClose}
+      >
         <Alert onClose={handleClose} severity="success">
-          Post added successfully!
+          {snackbar.message}
         </Alert>
       </Snackbar>
       {children}

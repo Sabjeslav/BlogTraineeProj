@@ -5,7 +5,6 @@ import {
   GET_ALL_POSTS,
   GET_POSTS,
   SET_POST_ERROR,
-  TOGGLE_SNACKBAR,
 } from "./postsTypes";
 
 const postsInitialState = {
@@ -13,7 +12,6 @@ const postsInitialState = {
   isFetching: false,
   loaded: false,
   error: null,
-  snackbar: false,
 };
 
 function postsReducer(state = postsInitialState, action) {
@@ -27,9 +25,6 @@ function postsReducer(state = postsInitialState, action) {
     }
     case SET_POST_ERROR: {
       return { ...state, error: action.error };
-    }
-    case TOGGLE_SNACKBAR: {
-      return { ...state, snackbar: !state.snackbar };
     }
     case ENABLE_POSTS_IS_FETCHING: {
       if (state.loaded) return state;
