@@ -5,13 +5,14 @@ import {
   ENABLE_USERS_IS_FETCHING,
   GET_ALL_USERS,
   GET_USERS,
+  SET_USERS_ERROR,
 } from "./usersTypes";
 
 const usersInitialState = {
   users: [],
   isFetching: false,
   loaded: false,
-  error: {},
+  error: null,
 };
 
 function usersReducer(state = usersInitialState, action) {
@@ -22,6 +23,9 @@ function usersReducer(state = usersInitialState, action) {
       return { ...state, users: action.data };
     case ADD_USER: {
       return { ...state, users: [...state.users, action.data] };
+    }
+    case SET_USERS_ERROR: {
+      return { ...state, error: action.error };
     }
     case DELETE_USER:
       return {

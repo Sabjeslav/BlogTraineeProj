@@ -3,6 +3,7 @@ import {
   DISABLE_POSTS_IS_FETCHING,
   ENABLE_POSTS_IS_FETCHING,
   GET_ALL_POSTS,
+  SET_POST_ERROR,
 } from "./postsTypes";
 
 export const getAllPostsMutation = (data) => {
@@ -28,5 +29,12 @@ export const addNewPostMutation = (data) => {
   return {
     type: ADD_NEW_POST,
     data,
+  };
+};
+
+export const setPostErrorMutation = (error) => {
+  return {
+    type: SET_POST_ERROR,
+    error,
   };
 };

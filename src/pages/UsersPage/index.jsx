@@ -12,6 +12,7 @@ export default function UsersPage() {
 
   return (
     <div className={styles.usersWrapper}>
+      <div>{usersState.error}</div>
       <div>
         <span className={styles.columnHeader}>Name</span>
         <span className={styles.columnHeader}>Email</span>

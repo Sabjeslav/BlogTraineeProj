@@ -1,6 +1,7 @@
 import {
   GET_CURRENT_USER,
   GET_USER,
+  SET_USER_ERROR,
   TOGGLE_LOGIN,
   TOGGLE_LOGOUT,
 } from "./currentUserTypes";
@@ -8,7 +9,7 @@ import {
 const userInitialState = {
   isLogged: !!localStorage.token,
   user: {},
-  error: {},
+  error: null,
 };
 
 function currentUserReducer(state = userInitialState, action) {
@@ -23,6 +24,9 @@ function currentUserReducer(state = userInitialState, action) {
     }
     case TOGGLE_LOGOUT: {
       return { ...state, user: {}, isLogged: false };
+    }
+    case SET_USER_ERROR: {
+      return { ...state, error: action.error };
     }
     default:
       return state;

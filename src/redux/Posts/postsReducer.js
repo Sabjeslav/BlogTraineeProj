@@ -4,13 +4,14 @@ import {
   ENABLE_POSTS_IS_FETCHING,
   GET_ALL_POSTS,
   GET_POSTS,
+  SET_POST_ERROR,
 } from "./postsTypes";
 
 const postsInitialState = {
   posts: [],
   isFetching: false,
   loaded: false,
-  error: {},
+  error: null,
 };
 
 function postsReducer(state = postsInitialState, action) {
@@ -19,12 +20,15 @@ function postsReducer(state = postsInitialState, action) {
       return { ...state };
     case GET_ALL_POSTS:
       return { ...state, posts: action.data };
+    case ADD_NEW_POST: {
+      return { ...state, posts: [...state.posts, action.data] };
+    }
+    case SET_POST_ERROR: {
+      return { ...state, error: action.error };
+    }
     case ENABLE_POSTS_IS_FETCHING: {
       if (state.loaded) return state;
       return { ...state, isFetching: true };
-    }
-    case ADD_NEW_POST: {
-      return { ...state, posts: [...state.posts, action.data] };
     }
     case DISABLE_POSTS_IS_FETCHING: {
       return { ...state, isFetching: false, loaded: true };

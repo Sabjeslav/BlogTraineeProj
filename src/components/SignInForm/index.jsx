@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { loginSchema } from "../../utils/validationSchemas";
 import style from "./SignInForm.module.sass";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { logIn } from "../../redux/CurrentUser/currentUserActions";
+import { useDispatch, useSelector } from "react-redux";
+import { logIn, setError } from "../../redux/CurrentUser/currentUserActions";
 
 export default function SignInForm() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [errorMessage, setErrorMessage] = useState(null);
+  const errorMessage = useSelector((state) => state.user.error);
   return (
     <div className={style.wrapper}>
       <h1>Sign in</h1>
@@ -28,7 +28,7 @@ export default function SignInForm() {
         >
           <Form
             className={style.formWrapper}
-            onChange={() => setErrorMessage(null)}
+            onChange={() => dispatch(setError(null))}
           >
             <div className={style.formSection}>
               <Field

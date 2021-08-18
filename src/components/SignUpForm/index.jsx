@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { newUserSchema } from "../../utils/validationSchemas";
 import style from "./Form.module.sass";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addNewUser } from "../../redux/Users/usersActions";
 
 export default function SignUpForm() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const [errorMsg, setErrorMsg] = useState(null);
+  const errorMessage = useSelector((state) => state.users.error);
   return (
     <div className={style.formContainer}>
       <Formik
@@ -20,7 +20,6 @@ export default function SignUpForm() {
         }}
         validationSchema={newUserSchema}
         onSubmit={async (values, actions) => {
-          console.log("values", values);
           dispatch(addNewUser(values, history));
           actions.resetForm();
         }}
@@ -66,7 +65,7 @@ export default function SignUpForm() {
               name="email"
             />
           </div>
-          <div className={style.errorMsg}>{errorMsg}</div>
+          <div className={style.errorMsg}>{errorMessage}</div>
           <button className={style.submitBtn} type="submit">
             Sign up
           </button>

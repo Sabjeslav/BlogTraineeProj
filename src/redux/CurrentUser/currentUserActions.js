@@ -2,6 +2,7 @@ import {
   getCurrentUserMutation,
   logInMutation,
   logOutMutation,
+  setErrorMutation,
 } from "./currentUserMutations";
 import {
   authUser,
@@ -47,6 +48,15 @@ export const logIn = (data, history) => {
         dispatch(getCurrentUser());
         history.push("/profile");
       })
-      .catch((e) => console.error(e));
+      .catch((e) => {
+        dispatch(setError(e));
+        console.error("Login error: ", e);
+      });
+  };
+};
+
+export const setError = (error) => {
+  return (dispatch) => {
+    dispatch(setErrorMutation(error));
   };
 };

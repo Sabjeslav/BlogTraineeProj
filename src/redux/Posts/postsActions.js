@@ -3,6 +3,7 @@ import {
   disablePostsIsFetching,
   enablePostsIsFetching,
   getAllPostsMutation,
+  setPostErrorMutation,
 } from "./postsMutations";
 import { createPost, fetchPosts } from "../../services/postsService";
 
@@ -11,11 +12,13 @@ export const getAllPosts = () => {
     dispatch(enablePostsIsFetching());
     fetchPosts()
       .then((res) => {
-        console.log("res", res);
         dispatch(getAllPostsMutation(res));
         dispatch(disablePostsIsFetching());
       })
-      .catch((e) => console.error(e));
+      .catch((e) => {
+        dispatch(setPostError(e));
+        console.error(e);
+      });
   };
 };
 
@@ -25,6 +28,15 @@ export const addNewPost = (data) => {
       .then(() => {
         dispatch(addNewPostMutation(data));
       })
-      .catch((e) => console.error(e));
+      .catch((e) => {
+        dispatch(setPostError(e));
+        console.error(e);
+      });
+  };
+};
+
+export const setPostError = (error) => {
+  return (dispatch) => {
+    dispatch(setPostErrorMutation(error));
   };
 };

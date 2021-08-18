@@ -3,6 +3,7 @@ import {
   disableUsersIsFetching,
   enableUsersIsFetching,
   getAllUsersMutation,
+  setUsersErrorMutation,
 } from "./usersMutations";
 import { createUser, fetchUsers } from "../../services/usersService";
 import { logIn } from "../CurrentUser/currentUserActions";
@@ -15,7 +16,10 @@ export const getAllUsers = () => {
         dispatch(getAllUsersMutation(res));
         dispatch(disableUsersIsFetching());
       })
-      .catch((e) => console.error(e));
+      .catch((e) => {
+        dispatch(setUsersError(e));
+        console.error(e);
+      });
   };
 };
 
@@ -27,6 +31,15 @@ export const addNewUser = (data, history) => {
         dispatch(addUserMutation(res));
         dispatch(logIn(data, history));
       })
-      .catch((e) => console.error(e));
+      .catch((e) => {
+        dispatch(setUsersError(e));
+        console.error(e);
+      });
+  };
+};
+
+export const setUsersError = (error) => {
+  return (dispatch) => {
+    dispatch(setUsersErrorMutation(error));
   };
 };

@@ -12,6 +12,7 @@ export default function PostsPage() {
   return (
     <div className={style.postsContainer}>
       <h1>Posts</h1>
+      <div>{postsState.error}</div>
       <div className={style.postsWrapper}>
         {postsState.posts.map((post) => {
           return <Post key={post._id} post={post} />;
