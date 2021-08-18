@@ -1,5 +1,4 @@
 import {
-  addNewPostMutation,
   disablePostsIsFetching,
   enablePostsIsFetching,
   getAllPostsMutation,
@@ -28,8 +27,8 @@ export const addNewPost = (data, history) => {
   return (dispatch) => {
     createPost(data)
       .then(() => {
-        dispatch(toggleSnackbar());
-        dispatch(addNewPostMutation(data));
+        dispatch(toggleSnackbar("Post added successfully"));
+        dispatch(getAllPosts());
         history.push("/posts");
       })
       .catch((e) => {

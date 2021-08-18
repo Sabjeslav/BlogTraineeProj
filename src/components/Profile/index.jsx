@@ -3,16 +3,19 @@ import { useParams } from "react-router-dom";
 import style from "./UserProfile.module.sass";
 import { useSelector } from "react-redux";
 import imgPlaceholder from "../../img/avatar-placeholder.png";
-import cx from "classnames";
+import Spinner from "../Spinner";
 
-function Profile() {
+export default function Profile() {
   let { user } = useSelector(({ user }) => user);
-  const users = useSelector((state) => state.users.users);
+  const usersState = useSelector((state) => state.users);
   const { id } = useParams();
-  if (id) {
-    user = users.find((u) => u._id === id);
+  if (!usersState.loaded) {
+    return <Spinner />;
   }
-  const imgLink = `https://nodejs-test-api-blog.herokuapp.com${user.avatar}`;
+  if (id) {
+    user = usersState.users.find((u) => u._id === id);
+  }
+
   return (
     <div className={style.profileWrapper}>
       <div className={style.profileHeader}>Profile</div>
@@ -36,9 +39,9 @@ function Profile() {
         <div className={style.profileData}>
           <div className={style.imgContainer}>
             <img
-              className={cx(style.profileImg)}
+              className={style.profileImg}
               alt=""
-              src={imgLink}
+              src={`https://nodejs-test-api-blog.herokuapp.com${user.avatar}`}
               onError={(e) => {
                 e.target.src = imgPlaceholder;
               }}
@@ -49,5 +52,3 @@ function Profile() {
     </div>
   );
 }
-
-export default Profile;
