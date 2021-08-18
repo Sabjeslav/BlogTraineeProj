@@ -1,32 +1,30 @@
-import React, { useState } from "react";
+import React from "react";
 import style from "./PageContainer.module.sass";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleSnackbar } from "../../redux/Posts/postsActions";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 export default function PageWrapper({ children }) {
-  const [open, setOpen] = useState(false);
-  const handleClick = () => {
-    setOpen(true);
-  };
-
+  const dispatch = useDispatch();
+  const open = useSelector((state) => state.posts.snackbar);
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
-    setOpen(false);
+    dispatch(toggleSnackbar());
   };
   return (
     <div className={style.main}>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success">
-          This is a success message!
+          Post added successfully!
         </Alert>
       </Snackbar>
-      <button onClick={handleClick}>Snackbar</button>
       {children}
     </div>
   );

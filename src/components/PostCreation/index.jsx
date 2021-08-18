@@ -4,12 +4,14 @@ import { newPostSchema } from "../../utils/validationSchemas";
 import style from "./PostCreation.module.sass";
 import { useDispatch, useSelector } from "react-redux";
 import { addNewPost, setPostError } from "../../redux/Posts/postsActions";
+import { useHistory } from "react-router-dom";
 
 const cx = require("classnames");
 
 function PostCreation() {
   const errorMessage = useSelector((state) => state.posts.error);
   const dispatch = useDispatch();
+  const history = useHistory();
   useEffect(() => {
     return () => {
       dispatch(setPostError(""));
@@ -27,7 +29,7 @@ function PostCreation() {
         }}
         validationSchema={newPostSchema}
         onSubmit={async (values, actions) => {
-          dispatch(addNewPost(values));
+          dispatch(addNewPost(values, history));
           actions.resetForm();
         }}
       >
