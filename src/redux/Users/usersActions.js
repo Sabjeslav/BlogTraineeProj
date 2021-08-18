@@ -13,6 +13,7 @@ export const getAllUsers = () => {
     dispatch(enableUsersIsFetching());
     fetchUsers()
       .then((res) => {
+        dispatch(setUsersError(null));
         dispatch(getAllUsersMutation(res));
         dispatch(disableUsersIsFetching());
       })

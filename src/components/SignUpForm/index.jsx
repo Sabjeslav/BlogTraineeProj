@@ -1,15 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { newUserSchema } from "../../utils/validationSchemas";
 import style from "./Form.module.sass";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addNewUser } from "../../redux/Users/usersActions";
+import { addNewUser, setUsersError } from "../../redux/Users/usersActions";
 
 export default function SignUpForm() {
   const history = useHistory();
   const dispatch = useDispatch();
   const errorMessage = useSelector((state) => state.users.error);
+
+  useEffect(() => {
+    return () => {
+      dispatch(setUsersError(""));
+    };
+  }, []);
+
   return (
     <div className={style.formContainer}>
       <Formik

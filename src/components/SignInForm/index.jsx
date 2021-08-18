@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { loginSchema } from "../../utils/validationSchemas";
 import style from "./SignInForm.module.sass";
@@ -11,6 +11,13 @@ export default function SignInForm() {
   const dispatch = useDispatch();
   const history = useHistory();
   const errorMessage = useSelector((state) => state.user.error);
+
+  useEffect(() => {
+    return () => {
+      dispatch(setError(""));
+    };
+  }, []);
+
   return (
     <div className={style.wrapper}>
       <h1>Sign in</h1>

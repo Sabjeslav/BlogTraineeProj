@@ -12,6 +12,7 @@ export const getAllPosts = () => {
     dispatch(enablePostsIsFetching());
     fetchPosts()
       .then((res) => {
+        dispatch(setPostError(null));
         dispatch(getAllPostsMutation(res));
         dispatch(disablePostsIsFetching());
       })

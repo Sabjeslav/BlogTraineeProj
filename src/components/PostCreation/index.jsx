@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { newPostSchema } from "../../utils/validationSchemas";
 import style from "./PostCreation.module.sass";
 import { useDispatch, useSelector } from "react-redux";
-import { addNewPost } from "../../redux/Posts/postsActions";
+import { addNewPost, setPostError } from "../../redux/Posts/postsActions";
 
 const cx = require("classnames");
 
 function PostCreation() {
   const errorMessage = useSelector((state) => state.posts.error);
   const dispatch = useDispatch();
+  useEffect(() => {
+    return () => {
+      dispatch(setPostError(""));
+    };
+  }, []);
+
   return (
     <div className={style.wrapper}>
       <h1>New post</h1>
