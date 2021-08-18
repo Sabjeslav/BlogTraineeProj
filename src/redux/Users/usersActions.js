@@ -4,6 +4,7 @@ import {
   enableUsersIsFetching,
   getAllUsersMutation,
   setUsersErrorMutation,
+  updateUsersMutation,
 } from "./usersMutations";
 import { createUser, fetchUsers } from "../../services/usersService";
 import { logIn } from "../CurrentUser/currentUserActions";
@@ -42,5 +43,12 @@ export const addNewUser = (data, history) => {
 export const setUsersError = (error) => {
   return (dispatch) => {
     dispatch(setUsersErrorMutation(error));
+  };
+};
+
+export const updateUsers = (data) => {
+  console.log("data", data);
+  return (dispatch) => {
+    dispatch(updateUsersMutation(data));
   };
 };

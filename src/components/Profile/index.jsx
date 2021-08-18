@@ -15,19 +15,18 @@ export default function Profile() {
   if (id) {
     user = usersState.users.find((u) => u._id === id);
   }
-
   return (
     <div className={style.profileWrapper}>
       <div className={style.profileHeader}>Profile</div>
       <div className={style.profileContainer}>
         <div className={style.profileData}>
           <div className={style.profileRow}>
-            <div className={style.rowCaption}>Email:</div>
-            <div className={style.rowContent}>{user.email}</div>
-          </div>
-          <div className={style.profileRow}>
             <div className={style.rowCaption}>Name:</div>
             <div className={style.rowContent}>{user.name}</div>
+          </div>
+          <div className={style.profileRow}>
+            <div className={style.rowCaption}>Email:</div>
+            <div className={style.rowContent}>{user.email}</div>
           </div>
           <div className={style.profileRow}>
             <div className={style.rowCaption}>Creation date:</div>

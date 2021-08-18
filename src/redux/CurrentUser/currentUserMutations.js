@@ -1,6 +1,7 @@
 import {
   GET_CURRENT_USER,
   SET_USER_ERROR,
+  TOGGLE_IS_EDITING,
   TOGGLE_LOGIN,
   TOGGLE_LOGOUT,
   UPDATE_USER,
@@ -36,5 +37,11 @@ export const updateUserMutation = (data) => {
   return {
     type: UPDATE_USER,
     data,
+  };
+};
+
+export const toggleIsEditingMutation = () => {
+  return {
+    type: TOGGLE_IS_EDITING,
   };
 };

@@ -3,6 +3,7 @@ import {
   logInMutation,
   logOutMutation,
   setErrorMutation,
+  toggleIsEditingMutation,
   updateUserMutation,
 } from "./currentUserMutations";
 import {
@@ -12,6 +13,8 @@ import {
   updateCurrentUser,
 } from "../../services/currentUserService";
 import { deleteUserMutation } from "../Users/usersMutations";
+import { updateUsers } from "../Users/usersActions";
+import { toggleSnackbar } from "../Snackbar/snackbarActions";
 
 export const getCurrentUser = () => {
   return (dispatch) => {
@@ -65,8 +68,21 @@ export const setError = (error) => {
 
 export const updateUser = (id, data) => {
   return (dispatch) => {
-    updateCurrentUser(id, data).then((res) => {
-      dispatch(updateUserMutation(res));
-    });
+    updateCurrentUser(id, data)
+      .then((res) => {
+        dispatch(updateUserMutation(res));
+        dispatch(updateUsers(res));
+        dispatch(toggleSnackbar("Profile saved successfully"));
+      })
+      .catch((e) => {
+        console.error("Update error: ", e);
+        dispatch(setError(e));
+      });
+  };
+};
+
+export const toggleIsEditing = () => {
+  return (dispatch) => {
+    dispatch(toggleIsEditingMutation());
   };
 };

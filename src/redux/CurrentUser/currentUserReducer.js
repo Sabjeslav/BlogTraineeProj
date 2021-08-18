@@ -2,6 +2,7 @@ import {
   GET_CURRENT_USER,
   GET_USER,
   SET_USER_ERROR,
+  TOGGLE_IS_EDITING,
   TOGGLE_LOGIN,
   TOGGLE_LOGOUT,
   UPDATE_USER,
@@ -10,6 +11,7 @@ import {
 const userInitialState = {
   isLogged: !!localStorage.token,
   user: {},
+  isEditing: false,
   error: null,
 };
 
@@ -22,6 +24,9 @@ function currentUserReducer(state = userInitialState, action) {
     }
     case UPDATE_USER: {
       return { ...state, user: { ...state.user, ...action.data } };
+    }
+    case TOGGLE_IS_EDITING: {
+      return { ...state, isEditing: !state.isEditing };
     }
     case TOGGLE_LOGIN: {
       return { ...state, isLogged: true };

@@ -7,12 +7,15 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   deleteCurrentUser,
   logOut,
+  toggleIsEditing,
 } from "../../redux/CurrentUser/currentUserActions";
+import EditProfileForm from "../../components/EditProfileForm";
 
 function CurrentUserProfilePage() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { user } = useSelector((state) => state.user);
+  const isEditing = useSelector((state) => state.user.isEditing);
   const logOutHandler = () => {
     localStorage.clear();
     dispatch(logOut());
@@ -25,28 +28,38 @@ function CurrentUserProfilePage() {
   const showPosts = () => {
     history.push("/userposts");
   };
-
+  const editHandler = () => {
+    dispatch(toggleIsEditing());
+  };
   return (
     <div className={style.profileOuterWrapper}>
-      <Profile user={user} />
-      <div className={cx(style.profileRow, style.buttonRow)}>
-        <button className={style.profileBtn} onClick={showPosts}>
-          Your posts
-        </button>
-        <button className={style.profileBtn}>Edit profile</button>
-        <button
-          className={cx(style.profileBtn, style.warningBtn)}
-          onClick={deleteAccount}
-        >
-          Delete account
-        </button>
-        <button
-          className={cx(style.profileBtn, style.warningBtn)}
-          onClick={logOutHandler}
-        >
-          Log out
-        </button>
-      </div>
+      {isEditing ? (
+        <EditProfileForm editHandler={editHandler} />
+      ) : (
+        <>
+          <Profile user={user} />
+          <div className={cx(style.profileRow, style.buttonRow)}>
+            <button className={style.profileBtn} onClick={showPosts}>
+              My posts
+            </button>
+            <button className={style.profileBtn} onClick={editHandler}>
+              Edit profile
+            </button>
+            <button
+              className={cx(style.profileBtn, style.warningBtn)}
+              onClick={deleteAccount}
+            >
+              Delete account
+            </button>
+            <button
+              className={cx(style.profileBtn, style.warningBtn)}
+              onClick={logOutHandler}
+            >
+              Log out
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 }

@@ -6,6 +6,7 @@ import {
   GET_ALL_USERS,
   GET_USERS,
   SET_USERS_ERROR,
+  UPDATE_USERS,
 } from "./usersTypes";
 
 const usersInitialState = {
@@ -26,6 +27,14 @@ function usersReducer(state = usersInitialState, action) {
     }
     case SET_USERS_ERROR: {
       return { ...state, error: action.error };
+    }
+    case UPDATE_USERS: {
+      const targetIndex = state.users.findIndex(
+        (user) => user._id === action.data._id
+      );
+      const copy = Object.assign([], state.users);
+      copy.splice(targetIndex, 1, action.data);
+      return { ...state, users: copy };
     }
     case DELETE_USER:
       return {

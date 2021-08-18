@@ -10,9 +10,9 @@ export default function Header() {
   const isLogged = useSelector((state) => state.user.isLogged);
   const dispatch = useDispatch();
   useEffect(() => {
+    if (localStorage.token) dispatch(getCurrentUser());
     dispatch(getAllUsers());
     dispatch(getAllPosts());
-    if (localStorage.token) dispatch(getCurrentUser());
   }, [dispatch]);
   return (
     <div className={style.headerWrapper}>

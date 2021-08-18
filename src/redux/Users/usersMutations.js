@@ -5,6 +5,7 @@ import {
   ENABLE_USERS_IS_FETCHING,
   GET_ALL_USERS,
   SET_USERS_ERROR,
+  UPDATE_USERS,
 } from "./usersTypes";
 
 export const getAllUsersMutation = (data) => {
@@ -44,5 +45,12 @@ export const setUsersErrorMutation = (error) => {
   return {
     type: SET_USERS_ERROR,
     error,
+  };
+};
+
+export const updateUsersMutation = (data) => {
+  return {
+    type: UPDATE_USERS,
+    data,
   };
 };
