@@ -1,8 +1,16 @@
 import axiosInstance from "./axiosInstance";
 
-export const fetchPosts = async (postedBy) => {
-  let url = `/posts?&limit=0`;
-  if (postedBy) url = `/posts?postedBy=${postedBy}&limit=0`;
+const defaultParams = {
+  limit: 0,
+  skip: 0,
+  postedBy: "",
+};
+
+export const fetchPosts = async (parameters) => {
+  const params = { ...defaultParams, ...parameters };
+  let url = `/posts?&limit=${params.limit}&skip=${params.skip}`;
+  if (params.postedBy)
+    url = `/posts?postedBy=${params.postedBy}&limit=${params.limit}&skip=${params.skip}`;
   return axiosInstance({
     method: "GET",
     url,

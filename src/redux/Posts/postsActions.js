@@ -8,9 +8,12 @@ import { createPost, fetchPosts } from "../../services/postsService";
 import { toggleSnackbar } from "../Snackbar/snackbarActions";
 
 export const getAllPosts = (postedBy) => {
+  const params = {
+    postedBy,
+  };
   return (dispatch) => {
     dispatch(enablePostsIsFetching());
-    fetchPosts(postedBy)
+    fetchPosts(params)
       .then((res) => {
         dispatch(setPostError(null));
         dispatch(getAllPostsMutation(res));
