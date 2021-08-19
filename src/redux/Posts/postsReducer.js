@@ -27,8 +27,7 @@ function postsReducer(state = postsInitialState, action) {
       return { ...state, error: action.error };
     }
     case ENABLE_POSTS_IS_FETCHING: {
-      if (state.loaded) return state;
-      return { ...state, isFetching: true };
+      return { ...state, isFetching: true, loaded: false };
     }
     case DISABLE_POSTS_IS_FETCHING: {
       return { ...state, isFetching: false, loaded: true };

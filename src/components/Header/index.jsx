@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import style from "./Header.module.sass";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUsers } from "../../redux/Users/usersActions";
 import { getAllPosts } from "../../redux/Posts/postsActions";
@@ -9,11 +9,13 @@ import { getCurrentUser } from "../../redux/CurrentUser/currentUserActions";
 export default function Header() {
   const isLogged = useSelector((state) => state.user.isLogged);
   const dispatch = useDispatch();
+  const useQuery = () => new URLSearchParams(useLocation().search);
+  const postedBy = useQuery().get("postedBy");
   useEffect(() => {
     if (localStorage.token) dispatch(getCurrentUser());
     dispatch(getAllUsers());
-    dispatch(getAllPosts());
-  }, [dispatch]);
+    dispatch(getAllPosts(postedBy));
+  }, [dispatch, postedBy]);
   return (
     <div className={style.headerWrapper}>
       <div className={style.headerBody}>

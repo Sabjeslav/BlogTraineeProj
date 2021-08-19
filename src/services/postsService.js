@@ -1,9 +1,11 @@
 import axiosInstance from "./axiosInstance";
 
-export const fetchPosts = async () => {
+export const fetchPosts = async (postedBy) => {
+  let url = `/posts?&limit=0`;
+  if (postedBy) url = `/posts?postedBy=${postedBy}&limit=0`;
   return axiosInstance({
     method: "GET",
-    url: "/posts?limit=0",
+    url,
   });
 };
 
@@ -35,6 +37,13 @@ export const getPostById = async (id) => {
   return axiosInstance({
     method: "get",
     url: `/posts/${id}`,
+  });
+};
+
+export const getPostsByUsedId = async (id) => {
+  return axiosInstance({
+    method: "get",
+    url: `/posts?postedBy=${id}`,
   });
 };
 

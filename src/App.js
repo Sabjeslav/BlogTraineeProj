@@ -12,7 +12,6 @@ import Forbidden from "./components/Forbidden";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PostsPage from "./pages/PostsPage";
 import UserProfile from "./components/Profile";
-import UserPostsPage from "./pages/UserPostsPage";
 import PostDetails from "./components/PostDetails";
 
 import "./App.sass";
@@ -39,7 +38,6 @@ function App() {
             <Route exact path="/forbidden" component={Forbidden} />
             <Route exact path="/posts" component={PostsPage} />
             <Route exact path="/posts/:id" component={PostDetails} />
-            <Route path="/userposts" component={UserPostsPage} />
           </Switch>
         </PageWrapper>
       </div>

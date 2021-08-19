@@ -6,9 +6,11 @@ import Spinner from "../../components/Spinner";
 
 export default function PostsPage() {
   const postsState = useSelector((state) => state.posts);
+
   if (postsState.isFetching) {
     return <Spinner />;
   }
+
   return (
     <div className={style.postsContainer}>
       <h1>Posts</h1>

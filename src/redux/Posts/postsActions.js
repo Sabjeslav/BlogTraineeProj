@@ -7,10 +7,10 @@ import {
 import { createPost, fetchPosts } from "../../services/postsService";
 import { toggleSnackbar } from "../Snackbar/snackbarActions";
 
-export const getAllPosts = () => {
+export const getAllPosts = (postedBy) => {
   return (dispatch) => {
     dispatch(enablePostsIsFetching());
-    fetchPosts()
+    fetchPosts(postedBy)
       .then((res) => {
         dispatch(setPostError(null));
         dispatch(getAllPostsMutation(res));

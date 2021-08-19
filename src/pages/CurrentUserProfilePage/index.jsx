@@ -25,9 +25,6 @@ function CurrentUserProfilePage() {
     dispatch(deleteCurrentUser(user._id));
     history.push("/signIn");
   };
-  const showPosts = () => {
-    history.push("/userposts");
-  };
   const editHandler = () => {
     dispatch(toggleIsEditing());
   };
@@ -39,9 +36,6 @@ function CurrentUserProfilePage() {
         <>
           <Profile user={user} />
           <div className={cx(style.profileRow, style.buttonRow)}>
-            <button className={style.profileBtn} onClick={showPosts}>
-              My posts
-            </button>
             <button className={style.profileBtn} onClick={editHandler}>
               Edit profile
             </button>
