@@ -2,6 +2,7 @@ import {
   disablePostsIsFetching,
   enablePostsIsFetching,
   getAllPostsMutation,
+  setPageMutation,
   setPostErrorMutation,
 } from "./postsMutations";
 import { createPost, fetchPosts } from "../../services/postsService";
@@ -38,6 +39,12 @@ export const addNewPost = (data, history) => {
         dispatch(setPostError(e));
         console.error(e);
       });
+  };
+};
+
+export const setPage = (page) => {
+  return (dispatch) => {
+    dispatch(setPageMutation(page));
   };
 };
 

@@ -3,6 +3,7 @@ import {
   DISABLE_POSTS_IS_FETCHING,
   ENABLE_POSTS_IS_FETCHING,
   GET_ALL_POSTS,
+  SET_PAGE,
   SET_POST_ERROR,
 } from "./postsTypes";
 
@@ -36,5 +37,12 @@ export const setPostErrorMutation = (error) => {
   return {
     type: SET_POST_ERROR,
     error,
+  };
+};
+
+export const setPageMutation = (page) => {
+  return {
+    type: SET_PAGE,
+    page,
   };
 };

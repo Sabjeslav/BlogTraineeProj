@@ -4,6 +4,7 @@ import {
   ENABLE_POSTS_IS_FETCHING,
   GET_ALL_POSTS,
   GET_POSTS,
+  SET_PAGE,
   SET_POST_ERROR,
 } from "./postsTypes";
 
@@ -12,6 +13,7 @@ const postsInitialState = {
   isFetching: false,
   loaded: false,
   error: null,
+  page: 1,
 };
 
 function postsReducer(state = postsInitialState, action) {
@@ -25,6 +27,9 @@ function postsReducer(state = postsInitialState, action) {
     }
     case SET_POST_ERROR: {
       return { ...state, error: action.error };
+    }
+    case SET_PAGE: {
+      return { ...state, page: action.page };
     }
     case ENABLE_POSTS_IS_FETCHING: {
       return { ...state, isFetching: true, loaded: false };

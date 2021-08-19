@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import style from "./PostsPage.module.sass";
 import Post from "../../components/Post";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../../components/Spinner";
 import { makeStyles } from "@material-ui/core/styles";
 import Pagination from "@material-ui/lab/Pagination";
+import { setPage } from "../../redux/Posts/postsActions";
 
 export default function PostsPage() {
+  const dispatch = useDispatch();
   const postsState = useSelector((state) => state.posts);
-  const [offset, setOffset] = useState(0);
-  const [page, setPage] = useState(1);
   const postsPerPage = 9;
   const pagesAmount = Math.ceil(postsState.posts.length / postsPerPage);
   const useStyles = makeStyles((theme) => ({
@@ -21,7 +21,7 @@ export default function PostsPage() {
   }));
 
   const handleChange = (event, value) => {
-    setPage(value);
+    dispatch(setPage(value));
   };
 
   const classes = useStyles();
@@ -36,19 +36,19 @@ export default function PostsPage() {
       <div>{postsState.error}</div>
       <div className={style.postsWrapper}>
         {postsState.posts
-          .slice((page - 1) * postsPerPage, page * postsPerPage)
+          .slice(
+            (postsState.page - 1) * postsPerPage,
+            postsState.page * postsPerPage
+          )
           .map((post) => {
             return <Post key={post._id} post={post} />;
           })}
-        {/*{postsState.posts.map((post) => {*/}
-        {/*  return <Post key={post._id} post={post} />;*/}
-        {/*})}*/}
       </div>
       <div className={classes.root}>
         <Pagination
           count={pagesAmount}
           defaultPage={1}
-          page={page}
+          page={postsState.page}
           onChange={handleChange}
           size="large"
           variant="outlined"
