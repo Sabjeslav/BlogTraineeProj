@@ -11,7 +11,7 @@ export default function PostsPage() {
   const dispatch = useDispatch();
   const postsState = useSelector((state) => state.posts);
   const postsPerPage = 9;
-  const pagesAmount = Math.ceil(postsState.posts.length / postsPerPage);
+  const pagesAmount = Math.ceil(postsState.pagination.total / postsPerPage);
   const useStyles = makeStyles((theme) => ({
     root: {
       "& > *": {
@@ -19,17 +19,15 @@ export default function PostsPage() {
       },
     },
   }));
+  const classes = useStyles();
 
   const handleChange = (event, value) => {
     dispatch(setPage(value));
   };
 
-  const classes = useStyles();
-
   if (postsState.isFetching) {
     return <Spinner />;
   }
-
   return (
     <div className={style.postsContainer}>
       <h1>Posts</h1>

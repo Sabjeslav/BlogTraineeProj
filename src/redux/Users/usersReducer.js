@@ -11,6 +11,7 @@ import {
 
 const usersInitialState = {
   users: [],
+  pagination: {},
   isFetching: false,
   loaded: false,
   error: null,
@@ -21,7 +22,11 @@ function usersReducer(state = usersInitialState, action) {
     case GET_USERS:
       return { ...state };
     case GET_ALL_USERS:
-      return { ...state, users: action.data };
+      return {
+        ...state,
+        users: action.data.data,
+        pagination: action.data.pagination,
+      };
     case ADD_USER: {
       return { ...state, users: [...state.users, action.data] };
     }

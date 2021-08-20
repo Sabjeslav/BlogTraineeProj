@@ -10,6 +10,7 @@ import {
 
 const postsInitialState = {
   posts: [],
+  pagination: {},
   isFetching: false,
   loaded: false,
   error: null,
@@ -21,7 +22,11 @@ function postsReducer(state = postsInitialState, action) {
     case GET_POSTS:
       return { ...state };
     case GET_ALL_POSTS:
-      return { ...state, posts: action.data };
+      return {
+        ...state,
+        posts: action.data.data,
+        pagination: action.data.pagination,
+      };
     case ADD_NEW_POST: {
       return { ...state, posts: [...state.posts, action.data] };
     }
