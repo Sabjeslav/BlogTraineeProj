@@ -1,7 +1,6 @@
 import React from "react";
 import style from "./EditProfileForm.module.sass";
 import { useDispatch, useSelector } from "react-redux";
-import imgPlaceholder from "../../img/avatar-placeholder.png";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import {
   toggleIsEditing,
@@ -52,18 +51,6 @@ export default function EditProfileForm() {
               >
                 Cancel
               </button>
-            </div>
-          </div>
-          <div className={style.profileData}>
-            <div className={style.imgContainer}>
-              <img
-                className={style.profileImg}
-                alt=""
-                src={`https://nodejs-test-api-blog.herokuapp.com${userState.user.avatar}`}
-                onError={(e) => {
-                  e.target.src = imgPlaceholder;
-                }}
-              />
             </div>
           </div>
         </div>

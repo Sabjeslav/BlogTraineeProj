@@ -6,12 +6,12 @@ import Spinner from "../../components/Spinner";
 import { makeStyles } from "@material-ui/core/styles";
 import Pagination from "@material-ui/lab/Pagination";
 import { setPage } from "../../redux/Posts/postsActions";
+import { POSTS_PER_PAGE } from "../../constants";
 
 export default function PostsPage() {
   const dispatch = useDispatch();
   const postsState = useSelector((state) => state.posts);
-  const postsPerPage = 9;
-  const pagesAmount = Math.ceil(postsState.pagination.total / postsPerPage);
+  const pagesAmount = Math.ceil(postsState.pagination.total / POSTS_PER_PAGE);
   const useStyles = makeStyles((theme) => ({
     root: {
       "& > *": {
@@ -33,14 +33,9 @@ export default function PostsPage() {
       <h1>Posts</h1>
       <div>{postsState.error}</div>
       <div className={style.postsWrapper}>
-        {postsState.posts
-          .slice(
-            (postsState.page - 1) * postsPerPage,
-            postsState.page * postsPerPage
-          )
-          .map((post) => {
-            return <Post key={post._id} post={post} />;
-          })}
+        {postsState.posts.map((post) => {
+          return <Post key={post._id} post={post} />;
+        })}
       </div>
       <div className={classes.root}>
         <Pagination

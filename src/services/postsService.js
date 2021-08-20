@@ -1,7 +1,7 @@
 import axiosInstance from "./axiosInstance";
 
 const defaultParams = {
-  limit: 0,
+  limit: 9,
   skip: 0,
   postedBy: "",
 };

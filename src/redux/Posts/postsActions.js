@@ -8,9 +8,10 @@ import {
 import { createPost, fetchPosts } from "../../services/postsService";
 import { toggleSnackbar } from "../Snackbar/snackbarActions";
 
-export const getAllPosts = (postedBy) => {
+export const getAllPosts = (postedBy, skip = 0) => {
   const params = {
     postedBy,
+    skip,
   };
   return (dispatch) => {
     dispatch(enablePostsIsFetching());
@@ -45,6 +46,7 @@ export const addNewPost = (data, history) => {
 export const setPage = (page) => {
   return (dispatch) => {
     dispatch(setPageMutation(page));
+    dispatch(getAllPosts("", (page - 1) * 9));
   };
 };
 
