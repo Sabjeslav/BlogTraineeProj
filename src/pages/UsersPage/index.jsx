@@ -2,13 +2,20 @@ import React from "react";
 import User from "../../components/User";
 import Spinner from "../../components/Spinner";
 import style from "./Users.module.sass";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Link } from "react-router-dom";
+import { Waypoint } from "react-waypoint";
+import { getAllUsers } from "../../redux/Users/usersActions";
 
 export default function UsersPage() {
   const usersState = useSelector((state) => state.users);
+  const dispatch = useDispatch();
+  const loadUsers = () => {
+    dispatch(getAllUsers(usersState.pagination.skip + 10));
+    console.log("Loading more users");
+  };
   if (usersState.isFetching) {
     return <Spinner />;
   }
@@ -41,6 +48,7 @@ export default function UsersPage() {
       {usersState.users.map((user) => {
         return <User key={user._id} user={user} />;
       })}
+      <Waypoint onEnter={loadUsers} />
     </div>
   );
 }

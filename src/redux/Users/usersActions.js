@@ -9,11 +9,12 @@ import {
 import { createUser, fetchUsers } from "../../services/usersService";
 import { logIn } from "../CurrentUser/currentUserActions";
 
-export const getAllUsers = () => {
+export const getAllUsers = (skip) => {
   return (dispatch) => {
     dispatch(enableUsersIsFetching());
-    fetchUsers()
+    fetchUsers(skip)
       .then((res) => {
+        console.log("res", res);
         dispatch(setUsersError(null));
         dispatch(getAllUsersMutation(res));
         dispatch(disableUsersIsFetching());
