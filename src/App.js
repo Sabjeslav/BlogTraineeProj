@@ -22,23 +22,25 @@ function App() {
       <div className="light-theme">
         <PageWrapper>
           <Header />
-          <Switch>
-            <Route exact path="/">
-              <Redirect to="/users" component={UsersPage} />
-            </Route>
-            <Route path="/signUp" component={SignUpPage} />
-            <Route exact path="/users" component={UsersPage} />
-            <Route exact path="/users/:id" component={UserProfile} />
-            <ProtectedRoute path="/newPost" component={PostCreation} />
-            <ProtectedRoute
-              path="/profile"
-              component={CurrentUserProfilePage}
-            />
-            <Route path="/signIn" component={SignInForm} />
-            <Route exact path="/forbidden" component={Forbidden} />
-            <Route exact path="/posts" component={PostsPage} />
-            <Route exact path="/posts/:id" component={PostDetails} />
-          </Switch>
+          <div className="main-container">
+            <Switch>
+              <Route exact path="/">
+                <Redirect to="/users" component={UsersPage} />
+              </Route>
+              <Route path="/signUp" component={SignUpPage} />
+              <Route exact path="/users" component={UsersPage} />
+              <Route exact path="/users/:id" component={UserProfile} />
+              <ProtectedRoute path="/newPost" component={PostCreation} />
+              <ProtectedRoute
+                path="/profile"
+                component={CurrentUserProfilePage}
+              />
+              <Route path="/signIn" component={SignInForm} />
+              <Route exact path="/forbidden" component={Forbidden} />
+              <Route exact path="/posts" component={PostsPage} />
+              <Route exact path="/posts/:id" component={PostDetails} />
+            </Switch>
+          </div>
         </PageWrapper>
       </div>
     </BrowserRouter>
