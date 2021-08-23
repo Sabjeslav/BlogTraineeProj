@@ -14,6 +14,7 @@ export default function Header() {
     if (localStorage.token) dispatch(getCurrentUser());
     dispatch(getAllPosts(postedBy));
   }, [dispatch, postedBy]);
+
   return (
     <div className={style.headerWrapper}>
       <div className={style.headerBody}>

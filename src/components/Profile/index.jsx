@@ -12,7 +12,8 @@ export default function Profile() {
   let { user } = useSelector(({ user }) => user);
   const usersState = useSelector((state) => state.users);
   const { id } = useParams();
-  if (!usersState.loaded) {
+
+  if (usersState.isFetching) {
     return <Spinner />;
   }
   if (id) {

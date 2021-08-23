@@ -15,6 +15,7 @@ export const getAllUsers = (skip = 0) => {
     dispatch(enableUsersIsFetching());
     fetchUsers(skip)
       .then((res) => {
+        console.log("res", res);
         dispatch(setUsersError(null));
         dispatch(getAllUsersMutation(res));
         dispatch(disableUsersIsFetching());

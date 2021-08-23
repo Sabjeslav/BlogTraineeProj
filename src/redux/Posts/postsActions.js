@@ -8,7 +8,7 @@ import {
 import { createPost, fetchPosts } from "../../services/postsService";
 import { toggleSnackbar } from "../Snackbar/snackbarActions";
 
-export const getAllPosts = (postedBy, skip = 0) => {
+export const getAllPosts = (postedBy = "", skip = 0) => {
   const params = {
     postedBy,
     skip,
