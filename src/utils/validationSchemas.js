@@ -52,13 +52,13 @@ export const uploadSchema = Yup.object().shape({
   file: Yup.mixed()
     .required()
     .test(
-      "fileSize",
-      "File is too large",
-      (value) => value && value.size <= FILE_SIZE
-    )
-    .test(
       "fileFormat",
       "Unsupported Format",
       (value) => value && SUPPORTED_FORMATS.includes(value.type)
+    )
+    .test(
+      "fileSize",
+      "File must be smaller than 1 Mb",
+      (value) => value && value.size <= FILE_SIZE
     ),
 });
