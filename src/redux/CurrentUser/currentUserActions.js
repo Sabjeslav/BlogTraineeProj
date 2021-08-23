@@ -11,6 +11,7 @@ import {
   deleteCurrentUserAcc,
   fetchCurrentUser,
   updateCurrentUser,
+  uploadAvatarPhoto,
 } from "../../services/currentUserService";
 import { deleteUserMutation } from "../Users/usersMutations";
 import { updateUsers } from "../Users/usersActions";
@@ -76,6 +77,21 @@ export const updateUser = (id, data) => {
       })
       .catch((e) => {
         console.error("Update error: ", e);
+        dispatch(setError(e));
+      });
+  };
+};
+
+export const updateAvatar = (id, data) => {
+  return (dispatch) => {
+    uploadAvatarPhoto(id, data)
+      .then((res) => {
+        dispatch(updateUserMutation(res));
+        dispatch(updateUsers(res));
+        dispatch(toggleSnackbar("New avatar saved successfully"));
+      })
+      .catch((e) => {
+        console.error("Avatar update error: ", e);
         dispatch(setError(e));
       });
   };

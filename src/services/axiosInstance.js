@@ -5,6 +5,7 @@ const axiosInstance = axios.create({
   baseURL: `${API_URL}`,
   headers: {
     Accept: "application/json",
+    "Content-Type": "multipart/form-data",
   },
 });
 
@@ -22,6 +23,7 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response) => response.data,
   (error) => {
+    console.log("error", error);
     return Promise.reject(error.response.data.error);
   }
 );

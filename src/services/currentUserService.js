@@ -38,3 +38,13 @@ export const updateCurrentUser = async (id, data) => {
     },
   });
 };
+
+export const uploadAvatarPhoto = async (id, data) => {
+  const formData = new FormData();
+  formData.append("avatar", data.file);
+  return axiosInstance({
+    method: "put",
+    url: `/users/upload/${id}`,
+    data: formData,
+  });
+};

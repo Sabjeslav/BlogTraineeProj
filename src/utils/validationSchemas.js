@@ -1,6 +1,8 @@
 import * as Yup from "yup";
 
 const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}$/gm;
+const FILE_SIZE = 1024 * 1024;
+const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/gif", "image/png"];
 
 export const newUserSchema = Yup.object().shape({
   name: Yup.string().min(2, "Too short!").max(30, "Too Long!"),
@@ -44,4 +46,19 @@ export const newCommentSchema = Yup.object().shape({
     .min(3, "Comment is too short!")
     .max(80, "Comment is too long!")
     .required("Enter comment"),
+});
+
+export const uploadSchema = Yup.object().shape({
+  file: Yup.mixed()
+    .required()
+    .test(
+      "fileSize",
+      "File is too large",
+      (value) => value && value.size <= FILE_SIZE
+    )
+    .test(
+      "fileFormat",
+      "Unsupported Format",
+      (value) => value && SUPPORTED_FORMATS.includes(value.type)
+    ),
 });

@@ -16,8 +16,11 @@ import {
   deleteCurrentUser,
   logOut,
   toggleIsEditing,
+  updateAvatar,
 } from "../../redux/CurrentUser/currentUserActions";
 import EditProfileForm from "../../components/EditProfileForm";
+import { ErrorMessage, Formik } from "formik";
+import { uploadSchema } from "../../utils/validationSchemas";
 
 function CurrentUserProfilePage() {
   const dispatch = useDispatch();
@@ -76,6 +79,41 @@ function CurrentUserProfilePage() {
               <button className={style.profileBtn} onClick={editHandler}>
                 Edit profile
               </button>
+              <div>
+                <Formik
+                  initialValues={{ file: null }}
+                  onSubmit={(values, actions) => {
+                    dispatch(updateAvatar(user._id, values));
+                    actions.resetForm();
+                  }}
+                  validationSchema={uploadSchema}
+                >
+                  {({ values, handleSubmit, setFieldValue }) => {
+                    return (
+                      <form onSubmit={handleSubmit}>
+                        <div className="form-group">
+                          <input
+                            id="file"
+                            name="file"
+                            type="file"
+                            onChange={(event) => {
+                              setFieldValue(
+                                "file",
+                                event.currentTarget.files[0]
+                              );
+                            }}
+                            className="form-control"
+                          />
+                        </div>
+                        <ErrorMessage name={"file"} component="div" />
+                        <button type="submit" className="btn btn-primary">
+                          Upload avatar
+                        </button>
+                      </form>
+                    );
+                  }}
+                </Formik>
+              </div>
               <button
                 className={cx(style.profileBtn, style.warningBtn)}
                 onClick={toggleModal}
