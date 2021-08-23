@@ -5,6 +5,7 @@ import {
   ENABLE_USERS_IS_FETCHING,
   GET_ALL_USERS,
   SET_USERS_ERROR,
+  SET_USERS_PAGINATION,
   UPDATE_USERS,
 } from "./usersTypes";
 
@@ -52,5 +53,12 @@ export const updateUsersMutation = (data) => {
   return {
     type: UPDATE_USERS,
     data,
+  };
+};
+
+export const setUserPaginationMutation = (skip) => {
+  return {
+    type: SET_USERS_PAGINATION,
+    skip,
   };
 };

@@ -1,11 +1,11 @@
 import axiosInstance from "./axiosInstance";
 
 const defaultParams = {
-  limit: 12,
+  limit: 10,
   skip: 0,
 };
 
-export const fetchUsers = async (skip) => {
+export const fetchUsers = async (skip = 0) => {
   const params = { ...defaultParams, skip };
   console.log("parameters", params);
   const url = `/users?limit=${params.limit}&skip=${params.skip}`;

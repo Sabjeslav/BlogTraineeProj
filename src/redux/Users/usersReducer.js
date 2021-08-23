@@ -6,6 +6,7 @@ import {
   GET_ALL_USERS,
   GET_USERS,
   SET_USERS_ERROR,
+  SET_USERS_PAGINATION,
   UPDATE_USERS,
 } from "./usersTypes";
 
@@ -53,6 +54,12 @@ function usersReducer(state = usersInitialState, action) {
     }
     case DISABLE_USERS_IS_FETCHING: {
       return { ...state, isFetching: false, loaded: true };
+    }
+    case SET_USERS_PAGINATION: {
+      return {
+        ...state,
+        pagination: { ...state.pagination, skip: action.skip },
+      };
     }
     default:
       return state;

@@ -57,7 +57,7 @@ export default function Profile() {
             <img
               className={style.profileImg}
               alt=""
-              src={`https://nodejs-test-api-blog.herokuapp.com${user.avatar}`}
+              src={`https://nodejs-test-api-blog.herokuapp.com/${user.avatar}`}
               onError={(e) => {
                 e.target.src = imgPlaceholder;
               }}

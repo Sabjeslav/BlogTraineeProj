@@ -7,12 +7,15 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Link } from "react-router-dom";
 import { Waypoint } from "react-waypoint";
-import { getAllUsers } from "../../redux/Users/usersActions";
+import { getAllUsers, setUserPagination } from "../../redux/Users/usersActions";
 
 export default function UsersPage() {
   const usersState = useSelector((state) => state.users);
   const dispatch = useDispatch();
   const loadUsers = () => {
+    if (usersState.pagination.skip >= usersState.pagination.total) {
+      return dispatch(setUserPagination(usersState.pagination.total));
+    }
     dispatch(getAllUsers(usersState.pagination.skip + 10));
     console.log("Loading more users");
   };

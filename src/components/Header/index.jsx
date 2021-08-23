@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import style from "./Header.module.sass";
 import { NavLink, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllUsers } from "../../redux/Users/usersActions";
 import { getAllPosts } from "../../redux/Posts/postsActions";
 import { getCurrentUser } from "../../redux/CurrentUser/currentUserActions";
 
@@ -13,7 +12,6 @@ export default function Header() {
   const postedBy = useQuery().get("postedBy");
   useEffect(() => {
     if (localStorage.token) dispatch(getCurrentUser());
-    dispatch(getAllUsers());
     dispatch(getAllPosts(postedBy));
   }, [dispatch, postedBy]);
   return (

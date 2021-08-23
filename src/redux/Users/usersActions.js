@@ -3,18 +3,18 @@ import {
   disableUsersIsFetching,
   enableUsersIsFetching,
   getAllUsersMutation,
+  setUserPaginationMutation,
   setUsersErrorMutation,
   updateUsersMutation,
 } from "./usersMutations";
 import { createUser, fetchUsers } from "../../services/usersService";
 import { logIn } from "../CurrentUser/currentUserActions";
 
-export const getAllUsers = (skip) => {
+export const getAllUsers = (skip = 0) => {
   return (dispatch) => {
     dispatch(enableUsersIsFetching());
     fetchUsers(skip)
       .then((res) => {
-        console.log("res", res);
         dispatch(setUsersError(null));
         dispatch(getAllUsersMutation(res));
         dispatch(disableUsersIsFetching());
@@ -48,8 +48,13 @@ export const setUsersError = (error) => {
 };
 
 export const updateUsers = (data) => {
-  console.log("data", data);
   return (dispatch) => {
     dispatch(updateUsersMutation(data));
+  };
+};
+
+export const setUserPagination = (skip) => {
+  return (dispatch) => {
+    dispatch(setUserPaginationMutation(skip));
   };
 };
